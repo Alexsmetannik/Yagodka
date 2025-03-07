@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.yagodka</groupId>
-    <artifactId>Yagodka</artifactId>
+    <artifactId>https://github.com/Alexsmetannik/Yagodka.git</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
