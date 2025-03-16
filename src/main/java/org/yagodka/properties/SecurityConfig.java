@@ -13,21 +13,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll() // Доступ без авторизации
-                        .anyRequest().authenticated() // Все остальные запросы требуют авторизации
+                        .requestMatchers("/public/**").permitAll() // Публичные endpoints
+                        .anyRequest().authenticated() // Все остальные endpoints требуют авторизации
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Страница авторизации
-                        .defaultSuccessUrl("/dashboard") // Перенаправление после успешной авторизации
+                        .loginPage("/public/login") // Страница авторизации
+                        .defaultSuccessUrl("/api/dashboard") // Перенаправление после успешной авторизации
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // URL для выхода
-                        .logoutSuccessUrl("/login") // Перенаправление после выхода
+                        .logoutUrl("/api/logout") // URL для выхода
+                        .logoutSuccessUrl("/public/logout-success") // Перенаправление после выхода
                         .permitAll()
                 );
         return http.build();
@@ -35,6 +36,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
+        // Создаем in-memory пользователя
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
                 .password("password")
