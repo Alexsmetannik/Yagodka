@@ -1,7 +1,7 @@
-package org.yagodka.properties;
+package org.yagodka.filter;
 
 import org.yagodka.services.UserDetailsServiceImpl;
-import org.yagodka.properties.JwtUtil;
+import org.yagodka.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

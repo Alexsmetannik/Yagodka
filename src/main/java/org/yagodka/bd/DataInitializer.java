@@ -1,7 +1,7 @@
 package org.yagodka.bd;
 
 import org.yagodka.models.User;
-import org.yagodka.bd.UserRepository;
+import org.yagodka.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

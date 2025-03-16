@@ -14,8 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot-starter.version>3.4.3</spring-boot-starter.version>
-        <spring-security.version>6.4.3</spring-security.version>
+        <spring-boot-starter.version>3.4.0</spring-boot-starter.version>
         <postgresql.version>42.7.5</postgresql.version>
         <jjwt.version>0.11.5</jjwt.version>
     </properties>
@@ -41,6 +40,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.7.14</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>

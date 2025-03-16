@@ -1,4 +1,4 @@
-package org.yagodka.properties;
+package org.yagodka.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

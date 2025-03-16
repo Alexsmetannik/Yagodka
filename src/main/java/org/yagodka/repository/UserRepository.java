@@ -1,4 +1,4 @@
-package org.yagodka.bd;
+package org.yagodka.repository;
 
 import org.yagodka.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
