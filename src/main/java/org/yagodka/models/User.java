@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
+@Table(name = "app_user")
 public class User implements UserDetails{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,8 +21,9 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    // Реализация методов UserDetails
+    private boolean enabled = true;
 
+    // Реализация методов UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
@@ -53,7 +56,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     // Геттеры и сеттеры
@@ -71,5 +74,9 @@ public class User implements UserDetails{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
