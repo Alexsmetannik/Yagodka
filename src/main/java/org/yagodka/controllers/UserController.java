@@ -1,7 +1,7 @@
 package org.yagodka.controllers;
 
 import org.yagodka.models.User;
-import com.example.demo.repository.UserRepository;
+import org.yagodka.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;

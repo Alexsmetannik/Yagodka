@@ -1,9 +1,9 @@
 package org.yagodka.controllers;
 
-import com.example.demo.model.AuthenticationRequest;
-import com.example.demo.model.AuthenticationResponse;
-import com.example.demo.service.UserDetailsServiceImpl;
-import com.example.demo.util.JwtUtil;
+import org.yagodka.models.AuthenticationRequest;
+import org.yagodka.models.AuthenticationResponse;
+import org.yagodka.services.UserDetailsServiceImpl;
+import org.yagodka.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
