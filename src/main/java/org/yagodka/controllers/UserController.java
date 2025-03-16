@@ -1,20 +1,26 @@
 package org.yagodka.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.yagodka.models.User;
+import com.example.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 public class UserController {
 
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "Welcome to your dashboard!";
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    @GetMapping("/logout")
-    public String logout() {
-        return "Logged out successfully!";
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return "User registered successfully!";
     }
 }
