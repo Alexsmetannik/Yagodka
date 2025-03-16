@@ -24,6 +24,7 @@ public class User implements UserDetails{
     private boolean enabled = true;
 
     // Реализация методов UserDetails
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
