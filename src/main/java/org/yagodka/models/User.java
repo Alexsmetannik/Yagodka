@@ -14,9 +14,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min=2, message = "Не меньше 5 знаков")
+    @Size(min = 2, message = "Не меньше 5 знаков")
     private String username;
-    @Size(min=2, message = "Не меньше 5 знаков")
+    @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
     @Transient
     private String passwordConfirm;
@@ -39,6 +39,10 @@ public class User implements UserDetails {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -57,10 +61,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override

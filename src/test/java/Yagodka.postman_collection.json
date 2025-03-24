@@ -1,117 +1,117 @@
 {
-	"info": {
-		"_postman_id": "8db08df3-a769-4b75-9c42-4227c95643ea",
-		"name": "Yagodka",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16273659"
-	},
-	"item": [
-		{
-			"name": "/login",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "user",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "password",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{baseUrl}}/public/login",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"public",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/dashboard",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/api/dashboard",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"dashboard"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/logout",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/api/logout",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"logout"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "8db08df3-a769-4b75-9c42-4227c95643ea",
+    "name": "Yagodka",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16273659"
+  },
+  "item": [
+    {
+      "name": "/login",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "user",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "password",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/public/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "public",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/dashboard",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dashboard",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dashboard"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/logout",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/logout",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
 }

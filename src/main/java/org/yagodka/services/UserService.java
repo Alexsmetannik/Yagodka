@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.yagodka.models.Role;
 import org.yagodka.models.User;
-
 import org.yagodka.repository.RoleRepository;
 import org.yagodka.repository.UserRepository;
 
@@ -20,14 +19,14 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
