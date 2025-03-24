@@ -15,7 +15,6 @@ public class SecurityConfig implements WebMvcConfigurer  {
 
     private final AuthService authService;
 
-    // Рекомендуемый способ - внедрение через конструктор
     @Autowired
     public SecurityConfig(AuthService authService) {
         this.authService = authService;
@@ -23,25 +22,34 @@ public class SecurityConfig implements WebMvcConfigurer  {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptor() {
+        registry.addInterceptor(createAuthInterceptor())
+                .addPathPatterns("/public/**")
+                .excludePathPatterns("/public/register", "/public/login");
+    }
+
+    private HandlerInterceptor createAuthInterceptor() {
+        return new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request,
                                      HttpServletResponse response,
                                      Object handler) throws Exception {
-                // Skip security for public endpoints
-                if (request.getRequestURI().startsWith("/public/register") ||
-                        request.getRequestURI().startsWith("/public/login")) {
-                    return true;
+                String token = extractToken(request);
+
+                if (token == null || !authService.validateToken(token)) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or missing token");
+                    return false;
                 }
 
-                String token = request.getHeader("Authorization");
-                if (token != null && authService.validateToken(token)) {
-                    return true;
-                }
-
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return false;
+                return true;
             }
-        }).addPathPatterns("/public/**");
+
+            private String extractToken(HttpServletRequest request) {
+                String bearerToken = request.getHeader("Authorization");
+                if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+                    return bearerToken.substring(7);
+                }
+                return null;
+            }
+        };
     }
 }

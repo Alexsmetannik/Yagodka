@@ -4,7 +4,6 @@ import org.yagodka.models.Token;
 import org.yagodka.models.User;
 import org.yagodka.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +19,7 @@ import java.util.Map;
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Value("${token.secret}")
     private String secret;
@@ -29,11 +28,28 @@ public class AuthService {
     private long expiration;
 
     private final Map<String, Long> activeTokens = new HashMap<>();
+
+    @Autowired
     private final SecretKey key;
 
+    @Autowired
+    public AuthService(UserRepository userRepository,
+                       @Value("${jwt.secret}") String secret) {
+        this.userRepository = userRepository;
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+
+        // Проверка зависимостей
+        if (userRepository == null) {
+            throw new IllegalStateException("Dependencies not initialized");
+        }
+    }
+
+    /*
     public AuthService(@Value("${token.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
+
+     */
 
     public Token register(User user) {
         userRepository.save(user);
