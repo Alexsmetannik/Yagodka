@@ -19,14 +19,14 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
+    @PersistenceContext
+    private EntityManager em;
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    @PersistenceContext
-    private EntityManager em;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
