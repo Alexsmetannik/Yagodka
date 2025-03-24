@@ -3,24 +3,26 @@ package org.yagodka.configs;
 import org.yagodka.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
-public class SecurityConfig implements WebMvcConfigurer {
+public class SecurityConfig implements HandlerInterceptor  {
+
 
     @Autowired
     private AuthService authService;
 
-    @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptorAdapter() {
+        registry.addInterceptor(new HandlerInterceptor() {
             @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            public boolean preHandle(HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     Object handler) throws Exception {
                 // Skip security for public endpoints
                 if (request.getRequestURI().startsWith("/public/register") ||
                         request.getRequestURI().startsWith("/public/login")) {
