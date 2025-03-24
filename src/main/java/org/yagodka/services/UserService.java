@@ -2,8 +2,8 @@ package org.yagodka.services;
 
 import org.yagodka.models.User;
 import org.yagodka.repository.UserRepository;
-import org.yagodka.entity.Role;
-import org.yagodka.entity.User;
+import org.yagodka.models.Role;
+import org.yagodka.models.User;
 import org.yagodka.repository.RoleRepository;
 import org.yagodka.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
