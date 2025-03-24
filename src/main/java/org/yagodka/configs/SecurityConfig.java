@@ -5,18 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Configuration
-public class SecurityConfig implements HandlerInterceptor  {
+@Configuration(proxyBeanMethods = false)
+public class SecurityConfig implements WebMvcConfigurer  {
 
+    private final AuthService authService;
 
+    // Рекомендуемый способ - внедрение через конструктор
     @Autowired
-    private AuthService authService;
+    public SecurityConfig(AuthService authService) {
+        this.authService = authService;
+    }
 
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
