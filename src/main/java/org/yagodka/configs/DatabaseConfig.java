@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig {
+
     @Value("${jdbc.driver}")
     private String driver;
 
