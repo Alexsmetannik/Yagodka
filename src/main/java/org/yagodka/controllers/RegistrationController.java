@@ -1,5 +1,6 @@
 package org.yagodka.controllers;
 
+import jakarta.validation.Valid;
 import org.yagodka.models.User;
 import org.yagodka.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
