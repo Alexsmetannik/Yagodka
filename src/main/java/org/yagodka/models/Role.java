@@ -3,7 +3,6 @@ package org.yagodka.models;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import jakarta.validation.Valid;
 import java.util.Set;
 
 @Entity

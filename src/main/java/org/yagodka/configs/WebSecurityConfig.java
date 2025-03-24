@@ -1,11 +1,11 @@
 package org.yagodka.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.yagodka.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    private final UserService userService;
 
-    public WebSecurityConfig(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    UserService userService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -26,23 +24,24 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+    public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Доступ только для не зарегистрированных пользователей
-                        .requestMatchers("/registration").not().fullyAuthenticated()
-                        // Доступ только для пользователей с ролью Администратор
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/news").hasRole("USER")
-                        // Доступ разрешен всем пользователям
-                        .requestMatchers("/", "/resources/**").permitAll()
-                        // Все остальные страницы требуют аутентификации
-                        .anyRequest().authenticated()
+                    //Доступ только для не зарегистрированных пользователей
+                    .requestMatchers("/registration").not().fullyAuthenticated()
+                    //Доступ только для пользователей с ролью Администратор
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/news").hasRole("USER")
+                    //Доступ разрешен всем пользователей
+                    .requestMatchers("/", "/resources/**").permitAll()
+                    //Все остальные страницы требуют аутентификации
+                    .anyRequest().authenticated()
                 )
+                //Настройка для входа в систему
                 .formLogin(form -> form
                         .loginPage("/login")
-                        // Перенаправление на главную страницу после успешного входа
+                        //Перенарпавление на главную страницу после успешного входа
                         .defaultSuccessUrl("/")
                         .permitAll()
                 )
@@ -50,14 +49,12 @@ public class WebSecurityConfig {
                         .permitAll()
                         .logoutSuccessUrl("/")
                 );
-
-        return http.build();
+        return httpSecurity.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
