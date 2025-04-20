@@ -2,17 +2,21 @@ package org.yagodka.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse {
     private String requestStatus;
     private List<String> errors;
     private Long id;
+
+    public ApiResponse(String requestStatus, List<String> errors, Long id) {
+        this.requestStatus = requestStatus;
+        this.errors = errors;
+        this.id = id;
+    }
 
     public String getRequestStatus() {
         return requestStatus;
