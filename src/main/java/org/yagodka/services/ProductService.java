@@ -1,5 +1,6 @@
 package org.yagodka.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.yagodka.models.ProductCreateDto;
 import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
@@ -15,9 +16,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
+    @Autowired // Можно опустить начиная с Spring 4.3
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public ProductDto getProductById(Long id) {
         Product product = productRepository.findById(id)
@@ -65,19 +70,11 @@ public class ProductService {
 
     private ProductDto convertToDto(Product product) {
         return new ProductDto(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getScore(),
-                product.getAuthor()
         );
     }
 
     private ProductSummaryDto convertToSummaryDto(Product product) {
         return new ProductSummaryDto(
-                product.getId(),
-                product.getName(),
-                product.getScore()
         );
     }
 }
