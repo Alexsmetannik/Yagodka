@@ -1,9 +1,10 @@
 package org.yagodka.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.yagodka.models.ApiResponse;
 import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
 import org.yagodka.services.ProductService;
@@ -12,14 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/public/product")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
+/*    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
-    }
+    }*/
 
     @GetMapping("/{productId}")
     public ProductDto getProduct(@PathVariable Long productId) {
@@ -32,17 +34,21 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createProduct(@RequestBody ProductDto productDto) {
-        HttpStatus status = productService.createProduct(productDto);
-        return ResponseEntity.status(status).build();
+    public ResponseEntity<ApiResponse> createProduct(@RequestBody ProductDto productDto) {
+        Long productId = productService.createProduct(productDto);
+        return ResponseEntity.ok(
+                new ApiResponse("success", null, productId)
+        );
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<Void> updateProduct(
+    public ResponseEntity<ApiResponse> updateProduct(
             @PathVariable Long productId,
             @RequestBody ProductDto productDto) {
-        HttpStatus status = productService.updateProduct(productId, productDto);
-        return ResponseEntity.status(status).build();
+        productService.updateProduct(productId, productDto);
+        return ResponseEntity.ok(
+                new ApiResponse("success", null, productId)
+        );
     }
 
     @DeleteMapping("/{productId}")

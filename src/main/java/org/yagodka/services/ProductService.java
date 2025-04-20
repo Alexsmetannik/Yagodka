@@ -52,24 +52,20 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public HttpStatus createProduct(ProductDto productDto) {
-        log.info("Creating product with data: {}", productDto); // Добавьте это
-
+    public Long createProduct(ProductDto productDto) {
         Product product = new Product();
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setScore(productDto.getScore());
         product.setAuthor(productDto.getAuthor());
 
-        Product saved = productRepository.save(product);
-        log.info("Saved product: {}", saved); // И это
-
-        return HttpStatus.CREATED;
+        Product savedProduct = productRepository.save(product);
+        return savedProduct.getId();
     }
 
-    public HttpStatus updateProduct(Long id, ProductDto productDto) {
+    public void updateProduct(Long id, ProductDto productDto) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
@@ -77,7 +73,6 @@ public class ProductService {
         product.setAuthor(productDto.getAuthor());
 
         productRepository.save(product);
-        return HttpStatus.OK;
     }
 
     public HttpStatus deleteProduct(Long id) {
@@ -94,7 +89,6 @@ public class ProductService {
         }
 
         ProductDto dto = new ProductDto();
-        dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
         dto.setScore(product.getScore());

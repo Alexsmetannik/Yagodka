@@ -1,6 +1,10 @@
 package org.yagodka.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,28 +14,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDto {
 
-    @JsonProperty("id")
-    private Long id;
-
+    @NotBlank
+    @Size(max = 30)
     @JsonProperty("name")
     private String name;
 
+    @Size(max = 1000)
     @JsonProperty("description")
     private String description;
 
+    @DecimalMin("0.0")
+    @DecimalMax("5.0")
     @JsonProperty("score")
     private Double score;
 
+    @NotBlank
+    @Size(max = 50)
     @JsonProperty("author")
     private String author;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
