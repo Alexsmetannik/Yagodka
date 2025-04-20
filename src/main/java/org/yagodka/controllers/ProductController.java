@@ -26,7 +26,7 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
-    @GetMapping("/s")
+    @GetMapping("s")
     public List<ProductSummaryDto> getAllProducts() {
         return productService.getAllProducts();
     }
