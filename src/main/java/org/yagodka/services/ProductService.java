@@ -11,6 +11,7 @@ import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
 import org.yagodka.repository.ProductRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,15 @@ public class ProductService {
     }
 
     public List<ProductSummaryDto> getAllProducts() {
-        return productRepository.findAll().stream()
+        List<Product> products = productRepository.findAll();
+
+        if (products.isEmpty()) {
+            log.warn("No products found in database");
+            return Collections.emptyList();
+        }
+
+        log.debug("Found {} products", products.size());
+        return products.stream()
                 .map(this::convertToSummaryDto)
                 .collect(Collectors.toList());
     }
@@ -96,7 +105,16 @@ public class ProductService {
     }
 
     private ProductSummaryDto convertToSummaryDto(Product product) {
-        return new ProductSummaryDto(
-        );
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+
+        ProductSummaryDto dto = new ProductSummaryDto();
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setScore(product.getScore());
+
+        log.trace("Converted product {} to DTO", product.getId());
+        return dto;
     }
 }
