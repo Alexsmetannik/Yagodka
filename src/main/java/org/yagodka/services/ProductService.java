@@ -1,5 +1,7 @@
 package org.yagodka.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+    private static final Logger log = LogManager.getLogger(ProductService.class);
     private final ProductRepository productRepository;
 
     @Autowired
@@ -22,8 +25,15 @@ public class ProductService {
     }
 
     public ProductDto getProductById(Long id) {
+        log.info("Fetching product with id: {}", id);
+
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+                .orElseThrow(() -> {
+                    log.error("Product not found with id: {}", id);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+                });
+
+        log.info("Found product: {}", product);
         return convertToDto(product);
     }
 
@@ -34,13 +44,17 @@ public class ProductService {
     }
 
     public HttpStatus createProduct(ProductDto productDto) {
+        log.info("Creating product with data: {}", productDto); // Добавьте это
+
         Product product = new Product();
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setScore(productDto.getScore());
         product.setAuthor(productDto.getAuthor());
 
-        productRepository.save(product);
+        Product saved = productRepository.save(product);
+        log.info("Saved product: {}", saved); // И это
+
         return HttpStatus.CREATED;
     }
 
@@ -66,8 +80,19 @@ public class ProductService {
     }
 
     private ProductDto convertToDto(Product product) {
-        return new ProductDto(
-        );
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+
+        ProductDto dto = new ProductDto();
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setScore(product.getScore());
+        dto.setAuthor(product.getAuthor());
+
+        log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
+        return dto;
     }
 
     private ProductSummaryDto convertToSummaryDto(Product product) {
