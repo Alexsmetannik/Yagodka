@@ -1,8 +1,9 @@
 package org.yagodka.entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.Name;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")

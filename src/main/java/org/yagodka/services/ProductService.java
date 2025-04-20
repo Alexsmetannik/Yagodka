@@ -1,16 +1,13 @@
 package org.yagodka.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.yagodka.models.ProductCreateDto;
-import org.yagodka.models.ProductDto;
-import org.yagodka.models.ProductSummaryDto;
-import org.yagodka.entity.Product;
-import org.yagodka.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.yagodka.entity.Product;
+import org.yagodka.models.ProductDto;
+import org.yagodka.models.ProductSummaryDto;
+import org.yagodka.repository.ProductRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    @Autowired // Можно опустить начиная с Spring 4.3
+    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
