@@ -1,6 +1,7 @@
 package org.yagodka.controllers;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/public/product")
+//@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
@@ -39,11 +41,9 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<StandartResponse> createProduct(@Valid @RequestBody ProductDto productDto) {
-        Long productId = productService.createProduct(productDto);
-        return ResponseEntity.ok(
-                new StandartResponse("success", null, productId)
-        );
+    @ResponseStatus(HttpStatus.CREATED)
+    public StandartResponse createProduct(@Valid @RequestBody ProductDto productDto) {
+        return new StandartResponse("success", null, productService.createProduct(productDto));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

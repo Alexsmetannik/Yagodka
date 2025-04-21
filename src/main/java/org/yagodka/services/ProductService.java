@@ -1,10 +1,13 @@
 package org.yagodka.services;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.yagodka.entity.Product;
 import org.yagodka.models.ProductDto;
@@ -17,6 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+//@RequiredArgsConstructor
+//@Slf4j
+@Transactional
 public class ProductService {
     private static final Logger log = LogManager.getLogger(ProductService.class);
     private final ProductRepository productRepository;
@@ -26,17 +32,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Transactional(readOnly = true)
     public ProductDto getProductById(Long id) {
         log.info("Fetching product with id: {}", id);
-
-        Product product = productRepository.findById(id)
+        return productRepository.findById(id)
+                .map(this::convertToDto)
                 .orElseThrow(() -> {
                     log.error("Product not found with id: {}", id);
                     return new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
                 });
-
-        log.info("Found product: {}", product);
-        return convertToDto(product);
     }
 
     public List<ProductSummaryDto> getAllProducts() {
@@ -61,8 +65,7 @@ public class ProductService {
         product.setAuthor(productDto.getAuthor());
         product.setPhotos(productDto.getPhotos());
 
-        Product savedProduct = productRepository.save(product);
-        return savedProduct.getId();
+        return productRepository.save(product).getId();
     }
 
     public void updateProduct(Long id, ProductUpdateDto updateDto) {
