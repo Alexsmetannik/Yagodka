@@ -12,7 +12,7 @@ import org.yagodka.services.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/public/product")
+@RequestMapping("/api/v1/public/product")
 public class ProductController {
 
     private final ProductService productService;
