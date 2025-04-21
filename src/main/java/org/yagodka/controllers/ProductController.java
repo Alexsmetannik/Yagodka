@@ -70,7 +70,7 @@ public class ProductController {
     @PutMapping("/{productId}")
     public ResponseEntity<StandartResponse> updateProduct(
             @PathVariable Long productId,
-            @RequestBody ProductUpdateDto updateDto) {
+            @Valid @RequestBody ProductUpdateDto updateDto) {
         productService.updateProduct(productId, updateDto);
         return ResponseEntity.ok(
                 new StandartResponse("success", null, productId)

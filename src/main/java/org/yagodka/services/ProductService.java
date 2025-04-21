@@ -85,13 +85,6 @@ public class ProductService {
         }
 
         productRepository.save(product);
-
-        product.setName(updateDto.getName());
-        product.setDescription(updateDto.getDescription());
-        product.setOverallScore(updateDto.getOverallScore());
-        product.setPhotos(updateDto.getPhotos());
-
-        productRepository.save(product);
     }
 
     public HttpStatus deleteProduct(Long id) {
