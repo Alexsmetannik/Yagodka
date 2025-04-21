@@ -14,6 +14,7 @@ import org.yagodka.models.ProductUpdateDto;
 import org.yagodka.repository.ProductRepository;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +40,44 @@ public class ProductService {
                 });
     }
 
-    public List<ProductSummaryDto> getAllProducts() {
+    @Transactional(readOnly = true)
+    public List<ProductSummaryDto> getAllProducts(Integer count, String filter, String sort) {
         List<Product> products = productRepository.findAll();
+
+        // Фильтрация (если указан параметр filter)
+        if (filter != null) {
+            switch (filter.toLowerCase()) {
+                case "id":
+                    products.sort(Comparator.comparing(Product::getId));
+                    break;
+                case "name":
+                    products.sort(Comparator.comparing(Product::getName));
+                    break;
+                case "score":
+                    products.sort(Comparator.comparing(Product::getOverallScore));
+                    break;
+                default:
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Invalid filter parameter. Allowed values: id, name, overall score");
+            }
+        }
+
+        // Сортировка (если указан параметр sort)
+        if (sort != null) {
+            if ("desc".equalsIgnoreCase(sort)) {
+                Collections.reverse(products);
+            } else if (!"asc".equalsIgnoreCase(sort)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Invalid sort parameter. Allowed values: asc, desc");
+            }
+        }
+
+        // Лимит (если указан параметр count)
+        if (count != null && count > 0) {
+            products = products.stream()
+                    .limit(count)
+                    .collect(Collectors.toList());
+        }
 
         if (products.isEmpty()) {
             log.warn("No products found in database");
@@ -48,6 +85,7 @@ public class ProductService {
         }
 
         log.debug("Found {} products", products.size());
+
         return products.stream()
                 .map(this::convertToSummaryDto)
                 .collect(Collectors.toList());

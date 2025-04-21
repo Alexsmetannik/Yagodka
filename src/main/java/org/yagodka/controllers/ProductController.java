@@ -34,8 +34,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductSummaryDto> getAllProducts() {
-        return productService.getAllProducts();
+    public List<ProductSummaryDto> getAllProducts(
+        @RequestParam(required = false) Integer count,
+        @RequestParam(required = false) String filter,
+        @RequestParam(required = false) String sort) {
+            return productService.getAllProducts(count, filter, sort);
     }
 
     @PostMapping("/create")
