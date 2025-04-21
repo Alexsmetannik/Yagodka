@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.yagodka.entity.Product;
 import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
+import org.yagodka.models.ProductUpdateDto;
 import org.yagodka.repository.ProductRepository;
 
 import java.util.Collections;
@@ -64,14 +65,31 @@ public class ProductService {
         return savedProduct.getId();
     }
 
-    public void updateProduct(Long id, ProductDto productDto) {
+    public void updateProduct(Long id, ProductUpdateDto updateDto) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        product.setName(productDto.getName());
-        product.setDescription(productDto.getDescription());
-        product.setOverallScore(productDto.getOverallScore());
-        product.setAuthor(productDto.getAuthor());
+        log.info("Updating product {} with data: {}", id, updateDto);
+
+        if (updateDto.getName() != null) {
+            product.setName(updateDto.getName());
+        }
+        if (updateDto.getDescription() != null) {
+            product.setDescription(updateDto.getDescription());
+        }
+        if (updateDto.getOverallScore() != null) {
+            product.setOverallScore(updateDto.getOverallScore());
+        }
+        if (updateDto.getPhotos() != null) {
+            product.setPhotos(updateDto.getPhotos());
+        }
+
+        productRepository.save(product);
+
+        product.setName(updateDto.getName());
+        product.setDescription(updateDto.getDescription());
+        product.setOverallScore(updateDto.getOverallScore());
+        product.setPhotos(updateDto.getPhotos());
 
         productRepository.save(product);
     }

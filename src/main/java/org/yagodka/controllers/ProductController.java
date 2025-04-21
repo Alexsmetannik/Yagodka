@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.yagodka.models.ProductUpdateDto;
 import org.yagodka.responces.StandartResponse;
 import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
@@ -69,8 +70,8 @@ public class ProductController {
     @PutMapping("/{productId}")
     public ResponseEntity<StandartResponse> updateProduct(
             @PathVariable Long productId,
-            @RequestBody ProductDto productDto) {
-        productService.updateProduct(productId, productDto);
+            @RequestBody ProductUpdateDto updateDto) {
+        productService.updateProduct(productId, updateDto);
         return ResponseEntity.ok(
                 new StandartResponse("success", null, productId)
         );
