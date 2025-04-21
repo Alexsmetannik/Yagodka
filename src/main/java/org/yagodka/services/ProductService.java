@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
-//@Slf4j
 @Transactional
 public class ProductService {
     private static final Logger log = LogManager.getLogger(ProductService.class);
