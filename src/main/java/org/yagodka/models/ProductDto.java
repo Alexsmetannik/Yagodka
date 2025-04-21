@@ -1,10 +1,7 @@
 package org.yagodka.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,26 +13,28 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDto {
 
-    @NotBlank
-    @Size(max = 30)
+    @NotBlank(message = "{product.name.required}")
+    @Size(max = 30, message = "name must be less than 30 characters")
     @JsonProperty("name")
     private String name;
 
-    @Size(max = 1000)
+    @NotBlank(message = "{product.description.required}")
+    @Size(max = 1000, message = "description must be less than 1000 characters")
     @JsonProperty("description")
     private String description;
 
-    @DecimalMin("0.0")
-    @DecimalMax("5.0")
+    @NotNull(message = "{product.overallScore.required}")
+    @DecimalMin(value = "0.0", message = "overall score must be at least 0.0")
+    @DecimalMax(value = "5.0", message = "overall score must be at most 5.0")
     @JsonProperty("overall score")
     private Double overallScore;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "{product.author.required}")
+    @Size(max = 50, message = "author must be less than 50 characters")
     @JsonProperty("author")
     private String author;
 
-    @Size(max = 1000)
+    @Size(max = 1000, message = "photos must be less than 1000 characters")
     @JsonProperty("photos")
     private String photos;
 
