@@ -37,7 +37,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<StandartResponse> createProduct(@Valid @RequestBody ProductDto productDto) {
         Long productId = productService.createProduct(productDto);
         return ResponseEntity.ok(
