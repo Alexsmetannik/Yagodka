@@ -21,7 +21,7 @@ public class Product {
     private String description;
     private Double overallScore;
     private String author;
-    private List<String> photos;
+    private String photos;
 
     public Long getId() {
         return id;
@@ -63,11 +63,11 @@ public class Product {
         this.author = author;
     }
 
-    public List<String> getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 }

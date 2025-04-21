@@ -35,8 +35,9 @@ public class ProductDto {
     @JsonProperty("author")
     private String author;
 
+    @Size(max = 1000)
     @JsonProperty("photos")
-    private List<String> photos;
+    private String photos;
 
     public String getName() {
         return name;
@@ -70,11 +71,11 @@ public class ProductDto {
         this.overallScore = overallScore;
     }
 
-    public List<String> getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 }

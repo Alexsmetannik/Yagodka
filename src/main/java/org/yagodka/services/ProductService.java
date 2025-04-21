@@ -58,6 +58,7 @@ public class ProductService {
         product.setDescription(productDto.getDescription());
         product.setOverallScore(productDto.getOverallScore());
         product.setAuthor(productDto.getAuthor());
+        product.setPhotos(productDto.getPhotos());
 
         Product savedProduct = productRepository.save(product);
         return savedProduct.getId();

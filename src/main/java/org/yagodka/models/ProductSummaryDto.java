@@ -22,7 +22,7 @@ public class ProductSummaryDto {
     private Double overallScore;
 
     @JsonProperty("photos")
-    private List<String> photos;
+    private String photos;
 
     public Long getId() {
         return id;
@@ -48,11 +48,11 @@ public class ProductSummaryDto {
         this.overallScore = overallScore;
     }
 
-    public List<String> getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 }
