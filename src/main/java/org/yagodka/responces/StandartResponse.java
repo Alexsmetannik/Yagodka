@@ -1,13 +1,13 @@
-package org.yagodka.models;
+package org.yagodka.responces;
 
 import java.util.List;
 
-public class ApiResponse {
+public class StandartResponse {
     private String requestStatus;
     private List<String> errors;
     private Long id;
 
-    public ApiResponse(String requestStatus, List<String> errors, Long id) {
+    public StandartResponse(String requestStatus, List<String> errors, Long id) {
         this.requestStatus = requestStatus;
         this.errors = errors;
         this.id = id;

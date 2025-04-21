@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,8 +18,11 @@ public class ProductSummaryDto {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("score")
-    private Double score;
+    @JsonProperty("overall score")
+    private Double overallScore;
+
+    @JsonProperty("photos")
+    private List<String> photos;
 
     public Long getId() {
         return id;
@@ -35,11 +40,19 @@ public class ProductSummaryDto {
         this.name = name;
     }
 
-    public Double getScore() {
-        return score;
+    public Double getOverallScore() {
+        return overallScore;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setOverallScore(Double overallScore) {
+        this.overallScore = overallScore;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

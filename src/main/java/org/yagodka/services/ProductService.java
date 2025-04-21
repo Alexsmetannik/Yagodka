@@ -56,7 +56,7 @@ public class ProductService {
         Product product = new Product();
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product.setScore(productDto.getScore());
+        product.setOverallScore(productDto.getOverallScore());
         product.setAuthor(productDto.getAuthor());
 
         Product savedProduct = productRepository.save(product);
@@ -69,7 +69,7 @@ public class ProductService {
 
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product.setScore(productDto.getScore());
+        product.setOverallScore(productDto.getOverallScore());
         product.setAuthor(productDto.getAuthor());
 
         productRepository.save(product);
@@ -91,7 +91,7 @@ public class ProductService {
         ProductDto dto = new ProductDto();
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
-        dto.setScore(product.getScore());
+        dto.setOverallScore(product.getOverallScore());
         dto.setAuthor(product.getAuthor());
 
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
@@ -106,7 +106,8 @@ public class ProductService {
         ProductSummaryDto dto = new ProductSummaryDto();
         dto.setId(product.getId());
         dto.setName(product.getName());
-        dto.setScore(product.getScore());
+        dto.setOverallScore(product.getOverallScore());
+        dto.setPhotos(product.getPhotos());
 
         log.trace("Converted product {} to DTO", product.getId());
         return dto;

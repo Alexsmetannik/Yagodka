@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 @Data // Генерирует геттеры, сеттеры, toString, equals и hashCode
@@ -17,8 +19,9 @@ public class Product {
 
     private String name;
     private String description;
-    private Double score;
+    private Double overallScore;
     private String author;
+    private List<String> photos;
 
     public Long getId() {
         return id;
@@ -44,12 +47,12 @@ public class Product {
         this.description = description;
     }
 
-    public Double getScore() {
-        return score;
+    public Double getOverallScore() {
+        return overallScore;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setOverallScore(Double overallScore) {
+        this.overallScore = overallScore;
     }
 
     public String getAuthor() {
@@ -58,5 +61,13 @@ public class Product {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

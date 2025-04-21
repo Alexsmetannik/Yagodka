@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,13 +27,16 @@ public class ProductDto {
 
     @DecimalMin("0.0")
     @DecimalMax("5.0")
-    @JsonProperty("score")
-    private Double score;
+    @JsonProperty("overall score")
+    private Double overallScore;
 
     @NotBlank
     @Size(max = 50)
     @JsonProperty("author")
     private String author;
+
+    @JsonProperty("photos")
+    private List<String> photos;
 
     public String getName() {
         return name;
@@ -49,19 +54,27 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
-    }
-
     public String getAuthor() {
         return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Double getOverallScore() {
+        return overallScore;
+    }
+
+    public void setOverallScore(Double overallScore) {
+        this.overallScore = overallScore;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

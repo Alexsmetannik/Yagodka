@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.yagodka.models.ApiResponse;
+import org.yagodka.responces.StandartResponse;
 import org.yagodka.models.ProductDto;
 import org.yagodka.models.ProductSummaryDto;
 import org.yagodka.services.ProductService;
@@ -33,20 +33,20 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<StandartResponse> createProduct(@RequestBody ProductDto productDto) {
         Long productId = productService.createProduct(productDto);
         return ResponseEntity.ok(
-                new ApiResponse("success", null, productId)
+                new StandartResponse("success", null, productId)
         );
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ApiResponse> updateProduct(
+    public ResponseEntity<StandartResponse> updateProduct(
             @PathVariable Long productId,
             @RequestBody ProductDto productDto) {
         productService.updateProduct(productId, productDto);
         return ResponseEntity.ok(
-                new ApiResponse("success", null, productId)
+                new StandartResponse("success", null, productId)
         );
     }
 
