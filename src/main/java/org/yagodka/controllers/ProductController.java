@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.yagodka.models.ProductDto;
-import org.yagodka.models.ProductSummaryDto;
-import org.yagodka.models.ProductUpdateDto;
-import org.yagodka.responces.StandartResponse;
+import org.yagodka.dto.models.ProductDto;
+import org.yagodka.dto.models.ProductSummaryDto;
+import org.yagodka.dto.models.ProductUpdateDto;
+import org.yagodka.dto.responces.StandardResponse;
 import org.yagodka.services.ProductService;
 
 import java.util.HashMap;
@@ -43,8 +43,8 @@ public class ProductController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public StandartResponse createProduct(@Valid @RequestBody ProductDto productDto) {
-        return new StandartResponse("success", null, productService.createProduct(productDto));
+    public StandardResponse createProduct(@Valid @RequestBody ProductDto productDto) {
+        return new StandardResponse("success", null, productService.createProduct(productDto));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -69,12 +69,12 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<StandartResponse> updateProduct(
+    public ResponseEntity<StandardResponse> updateProduct(
             @PathVariable Long productId,
             @Valid @RequestBody ProductUpdateDto updateDto) {
         productService.updateProduct(productId, updateDto);
         return ResponseEntity.ok(
-                new StandartResponse("success", null, productId)
+                new StandardResponse("success", null, productId)
         );
     }
 

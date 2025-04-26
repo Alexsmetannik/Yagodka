@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.yagodka.entity.Product;
-import org.yagodka.models.ProductDto;
-import org.yagodka.models.ProductSummaryDto;
-import org.yagodka.models.ProductUpdateDto;
+import org.yagodka.dto.models.ProductDto;
+import org.yagodka.dto.models.ProductSummaryDto;
+import org.yagodka.dto.models.ProductUpdateDto;
 import org.yagodka.repository.ProductRepository;
 
 import java.util.Collections;

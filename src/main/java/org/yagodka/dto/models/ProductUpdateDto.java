@@ -1,4 +1,4 @@
-package org.yagodka.models;
+package org.yagodka.dto.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMax;

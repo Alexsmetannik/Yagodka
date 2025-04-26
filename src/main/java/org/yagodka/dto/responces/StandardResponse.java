@@ -1,13 +1,13 @@
-package org.yagodka.responces;
+package org.yagodka.dto.responces;
 
 import java.util.List;
 
-public class StandartResponse {
+public class StandardResponse {
     private String requestStatus;
     private List<String> errors;
     private Long id;
 
-    public StandartResponse(String requestStatus, List<String> errors, Long id) {
+    public StandardResponse(String requestStatus, List<String> errors, Long id) {
         this.requestStatus = requestStatus;
         this.errors = errors;
         this.id = id;
