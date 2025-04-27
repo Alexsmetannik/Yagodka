@@ -30,11 +30,6 @@ public class ProductUpdateDto {
     @JsonProperty("overall score")
     private Double overallScore;
 
-    @DecimalMin(value = "0.0", message = "myScore must be at least 0.0")
-    @DecimalMax(value = "5.0", message = "myScore must be at most 5.0")
-    @JsonProperty("myScore")
-    private Double myScore;
-
     @Size(max = 1000, message = "photo must be less than 1000 characters")
     @JsonProperty("photo")
     private String photo;
@@ -69,14 +64,6 @@ public class ProductUpdateDto {
 
     public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
-    }
-
-    public Double getMyScore() {
-        return myScore;
-    }
-
-    public void setMyScore(Double myScore) {
-        this.myScore = myScore;
     }
 
     public String getPhoto() {

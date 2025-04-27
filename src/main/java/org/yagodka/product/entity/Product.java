@@ -30,9 +30,6 @@ public class Product {
     @Column(columnDefinition = "NUMERIC(3,1)")
     private Double overallScore;
 
-    @Column(columnDefinition = "NUMERIC(3,1)")
-    private Double myScore;
-
     @Column(nullable = false, length = 50)
     private String author;
 
@@ -77,14 +74,6 @@ public class Product {
 
     public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
-    }
-
-    public Double getMyScore() {
-        return myScore;
-    }
-
-    public void setMyScore(Double myScore) {
-        this.myScore = myScore;
     }
 
     public String getAuthor() {
