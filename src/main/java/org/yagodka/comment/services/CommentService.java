@@ -34,12 +34,15 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public CommentDto getCommentById(Long id) {
-        log.info("Fetching comment with id: {}", id);
-        return commentRepository.findById(id)
+    public CommentDto getCommentsByProductId(Long productId) {
+        List<Comment> comments = commentRepository.findByProductId(productId);
+
+        log.info("Fetching comment with id: {}", productId);
+
+        return commentRepository.findById(productId)
                 .map(this::convertToDto)
                 .orElseThrow(() -> {
-                    log.error("Comment not found with id: {}", id);
+                    log.error("Comment not found with id: {}", productId);
                     return new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found");
                 });
     }
@@ -75,7 +78,7 @@ public class CommentService {
 
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
-        comment.setProductId(product.orElse(null));
+        comment.setProduct(product.orElse(null));
         comment.setDignities(commentDto.getDignities());
         comment.setDisadvantages(commentDto.getDisadvantages());
         comment.setResult(commentDto.getResult());
@@ -122,7 +125,7 @@ public class CommentService {
 
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProductId().getId());
+        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());
@@ -140,7 +143,7 @@ public class CommentService {
 
         CommentSummaryDto dto = new CommentSummaryDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProductId().getId());
+        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());

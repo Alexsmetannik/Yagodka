@@ -19,8 +19,8 @@ public class Comment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "productId", nullable = false)
-    private Product productId;
+    @JoinColumn(name = "product", nullable = false)
+    private Product product;
 
     @Column(length = 1000)
     private String dignities;
@@ -45,12 +45,12 @@ public class Comment {
         this.id = id;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getDignities() {

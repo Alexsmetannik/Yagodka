@@ -28,8 +28,10 @@ public class CommentController {
     }
 
     @GetMapping("/{commentId}")
-    public CommentDto getComment(@PathVariable Long commentId) {
-        return commentService.getCommentById(commentId);
+    public CommentDto getCommentsByProduct(
+            @PathVariable Long productId,
+            @PathVariable Long commentId) {
+        return commentService.getCommentsByProductId(productId);
     }
 
     @GetMapping("/all")

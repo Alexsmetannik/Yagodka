@@ -179,7 +179,7 @@ public class ProductService {
     private CommentDto convertCommentToDto(Comment comment) {
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProductId().getId());
+        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());

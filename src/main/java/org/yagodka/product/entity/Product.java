@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.yagodka.comment.entity.Comment;
+
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -35,6 +38,9 @@ public class Product {
 
     @Column(length = 1000)
     private String photo;
+
+    @OneToMany(mappedBy = "product")
+    private List<Comment> comments;
 
     public Long getId() {
         return id;
@@ -90,5 +96,13 @@ public class Product {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
