@@ -17,6 +17,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "type_product_id", nullable = false)
+    private TypeProduct typeProduct;
+
     @Column(nullable = false, length = 30)
     private String name;
 
@@ -38,6 +42,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
     }
 
     public String getName() {

@@ -13,6 +13,9 @@ public class ProductSummaryDto {
     @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("type")
+    private String typeProduct;
+
     @JsonProperty("name")
     private String name;
 
@@ -28,6 +31,14 @@ public class ProductSummaryDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(String typeProduct) {
+        this.typeProduct = typeProduct;
     }
 
     public String getName() {

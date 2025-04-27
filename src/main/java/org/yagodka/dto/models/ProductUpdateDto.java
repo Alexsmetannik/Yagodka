@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductUpdateDto {
 
+    @Size(max = 50, message = "type must be less than 50 characters")
+    @JsonProperty("type")
+    private String typeProduct;
+
     @Size(max = 30, message = "name must be less than 30 characters")
     @JsonProperty("name")
     private String name;
@@ -29,6 +33,14 @@ public class ProductUpdateDto {
     @Size(max = 1000, message = "photos must be less than 1000 characters")
     @JsonProperty("photos")
     private String photos;
+
+    public String getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(String typeProduct) {
+        this.typeProduct = typeProduct;
+    }
 
     public String getName() {
         return name;

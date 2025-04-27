@@ -11,7 +11,9 @@ import org.yagodka.entity.Product;
 import org.yagodka.dto.models.ProductDto;
 import org.yagodka.dto.models.ProductSummaryDto;
 import org.yagodka.dto.models.ProductUpdateDto;
+import org.yagodka.entity.TypeProduct;
 import org.yagodka.repository.ProductRepository;
+import org.yagodka.repository.TypeProductRepository;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,10 +25,12 @@ import java.util.stream.Collectors;
 public class ProductService {
     private static final Logger log = LogManager.getLogger(ProductService.class);
     private final ProductRepository productRepository;
+    private final TypeProductRepository typeProductRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, TypeProductRepository typeProductRepository) {
         this.productRepository = productRepository;
+        this.typeProductRepository = typeProductRepository;
     }
 
     @Transactional(readOnly = true)
@@ -92,7 +96,13 @@ public class ProductService {
     }
 
     public Long createProduct(ProductDto productDto) {
+        TypeProduct typeProduct = typeProductRepository.findByName(productDto.getTypeProduct());
+        if (typeProduct == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product type");
+        }
+
         Product product = new Product();
+        product.setTypeProduct(typeProduct);
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setOverallScore(productDto.getOverallScore());
@@ -120,6 +130,13 @@ public class ProductService {
         if (updateDto.getPhotos() != null) {
             product.setPhotos(updateDto.getPhotos());
         }
+        if (updateDto.getTypeProduct() != null) {
+            TypeProduct typeProduct = typeProductRepository.findByName(updateDto.getTypeProduct());
+            if (typeProduct == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product type");
+            }
+            product.setTypeProduct(typeProduct);
+        }
 
         productRepository.save(product);
     }
@@ -142,6 +159,7 @@ public class ProductService {
         dto.setDescription(product.getDescription());
         dto.setOverallScore(product.getOverallScore());
         dto.setAuthor(product.getAuthor());
+        dto.setTypeProduct(product.getTypeProduct().getName());
 
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
         return dto;
@@ -157,6 +175,7 @@ public class ProductService {
         dto.setName(product.getName());
         dto.setOverallScore(product.getOverallScore());
         dto.setPhotos(product.getPhotos());
+        dto.setTypeProduct(product.getTypeProduct().getName());
 
         log.trace("Converted product {} to DTO", product.getId());
         return dto;
