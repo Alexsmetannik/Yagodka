@@ -11,6 +11,10 @@ import org.yagodka.comment.dto.CommentDto;
 import org.yagodka.comment.dto.CommentSummaryDto;
 import org.yagodka.comment.entity.Comment;
 import org.yagodka.comment.repository.CommentRepository;
+import org.yagodka.product.dto.ProductDto;
+import org.yagodka.product.entity.Product;
+import org.yagodka.product.entity.TypeProduct;
+import org.yagodka.product.repository.ProductRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +25,12 @@ import java.util.stream.Collectors;
 public class CommentService {
     private static final Logger log = LogManager.getLogger(CommentService.class);
     private final CommentRepository commentRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, ProductRepository productRepository) {
         this.commentRepository = commentRepository;
+        this.productRepository = productRepository;
     }
 
     @Transactional(readOnly = true)
@@ -61,7 +67,23 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    public Long createComment(CommentDto commentDto) {
+        Product product = productRepository.findById(commentDto.getProductId());
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product id");
+        }
 
+        Comment comment = new Comment();
+        comment.setId(commentDto.getId());
+        comment.setProductId(product);
+        comment.setDignities(commentDto.getDignities());
+        comment.setDisadvantages(commentDto.getDisadvantages());
+        comment.setResult(commentDto.getResult());
+        comment.setMyScore(commentDto.getMyScore());
+        comment.setAuthor(commentDto.getAuthor());
+
+        return commentRepository.save(comment).getId();
+    }
 
 
 
