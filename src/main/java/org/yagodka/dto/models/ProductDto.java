@@ -31,6 +31,11 @@ public class ProductDto {
     @JsonProperty("overall score")
     private Double overallScore;
 
+    @DecimalMin(value = "0.0", message = "myScore must be at least 0.0")
+    @DecimalMax(value = "5.0", message = "myScore must be at most 5.0")
+    @JsonProperty("myScore")
+    private Double myScore;
+
     @NotBlank(message = "{product.author.required}")
     @Size(max = 50, message = "author must be less than 50 characters")
     @JsonProperty("author")
@@ -78,6 +83,14 @@ public class ProductDto {
 
     public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
+    }
+
+    public Double getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(Double myScore) {
+        this.myScore = myScore;
     }
 
     public String getPhoto() {

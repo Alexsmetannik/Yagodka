@@ -106,6 +106,7 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setOverallScore(productDto.getOverallScore());
+        product.setMyScore(productDto.getMyScore());
         product.setAuthor(productDto.getAuthor());
         product.setPhoto(productDto.getPhoto());
 
@@ -126,6 +127,9 @@ public class ProductService {
         }
         if (updateDto.getOverallScore() != null) {
             product.setOverallScore(updateDto.getOverallScore());
+        }
+        if (updateDto.getMyScore() != null) {
+            product.setMyScore(updateDto.getMyScore());
         }
         if (updateDto.getPhoto() != null) {
             product.setPhoto(updateDto.getPhoto());
@@ -158,6 +162,7 @@ public class ProductService {
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
         dto.setOverallScore(product.getOverallScore());
+        dto.setMyScore(product.getMyScore());
         dto.setAuthor(product.getAuthor());
         dto.setTypeProduct(product.getTypeProduct().getName());
         dto.setPhoto(product.getPhoto());
@@ -175,6 +180,7 @@ public class ProductService {
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setOverallScore(product.getOverallScore());
+        dto.setMyScore(product.getMyScore());
         dto.setPhoto(product.getPhoto());
         dto.setTypeProduct(product.getTypeProduct().getName());
 

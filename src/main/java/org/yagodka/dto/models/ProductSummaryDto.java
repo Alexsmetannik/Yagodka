@@ -22,6 +22,9 @@ public class ProductSummaryDto {
     @JsonProperty("overall score")
     private Double overallScore;
 
+    @JsonProperty("myScore")
+    private Double myScore;
+
     @JsonProperty("photo")
     private String photo;
 
@@ -55,6 +58,14 @@ public class ProductSummaryDto {
 
     public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
+    }
+
+    public Double getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(Double myScore) {
+        this.myScore = myScore;
     }
 
     public String getPhoto() {
