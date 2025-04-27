@@ -9,15 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.yagodka.comment.dto.CommentDto;
 import org.yagodka.comment.dto.CommentSummaryDto;
+import org.yagodka.comment.dto.CommentUpdateDto;
 import org.yagodka.comment.entity.Comment;
 import org.yagodka.comment.repository.CommentRepository;
-import org.yagodka.product.dto.ProductDto;
+import org.yagodka.product.dto.ProductUpdateDto;
 import org.yagodka.product.entity.Product;
 import org.yagodka.product.entity.TypeProduct;
 import org.yagodka.product.repository.ProductRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,14 +70,14 @@ public class CommentService {
     }
 
     public Long createComment(CommentDto commentDto) {
-        Product product = productRepository.findById(commentDto.getProductId());
-        if (product == null) {
+        Optional<Product> product = productRepository.findById(commentDto.getProductId());
+        if (product.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product id");
         }
 
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
-        comment.setProductId(product);
+        comment.setProductId(product.orElse(null));
         comment.setDignities(commentDto.getDignities());
         comment.setDisadvantages(commentDto.getDisadvantages());
         comment.setResult(commentDto.getResult());
@@ -85,9 +87,35 @@ public class CommentService {
         return commentRepository.save(comment).getId();
     }
 
+    public void updateComment(Long id, CommentUpdateDto commentDto) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        log.info("Updating comment {} with data: {}", id, commentDto);
 
+        if (commentDto.getDignities() != null) {
+            comment.setDignities(commentDto.getDignities());
+        }
+        if (commentDto.getDisadvantages() != null) {
+            comment.setDisadvantages(commentDto.getDisadvantages());
+        }
+        if (commentDto.getResult() != null) {
+            comment.setResult(commentDto.getResult());
+        }
+        if (commentDto.getMyScore() != null) {
+            comment.setMyScore(commentDto.getMyScore());
+        }
 
+        commentRepository.save(comment);
+    }
+
+    public HttpStatus deleteComment(Long id) {
+        if (!commentRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found");
+        }
+        commentRepository.deleteById(id);
+        return HttpStatus.NO_CONTENT;
+    }
 
     private CommentDto convertToDto(Comment comment) {
         if (comment == null) {

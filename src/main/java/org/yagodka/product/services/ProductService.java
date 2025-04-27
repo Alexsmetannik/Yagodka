@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.yagodka.comment.dto.CommentDto;
+import org.yagodka.comment.entity.Comment;
+import org.yagodka.comment.repository.CommentRepository;
 import org.yagodka.product.entity.Product;
 import org.yagodka.product.dto.ProductDto;
 import org.yagodka.product.dto.ProductSummaryDto;
@@ -15,6 +18,7 @@ import org.yagodka.product.entity.TypeProduct;
 import org.yagodka.product.repository.ProductRepository;
 import org.yagodka.product.repository.TypeProductRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,11 +30,13 @@ public class ProductService {
     private static final Logger log = LogManager.getLogger(ProductService.class);
     private final ProductRepository productRepository;
     private final TypeProductRepository typeProductRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, TypeProductRepository typeProductRepository) {
+    public ProductService(ProductRepository productRepository, TypeProductRepository typeProductRepository, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.typeProductRepository = typeProductRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -149,10 +155,12 @@ public class ProductService {
         return HttpStatus.NO_CONTENT;
     }
 
-    private ProductDto convertToDto(Product product) {
+    private ProductDto convertToDto(Product product, ProductDto productDto) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null");
         }
+
+        List<Comment> comments = commentRepository.findAll(productDto.getComments());
 
         ProductDto dto = new ProductDto();
         dto.setName(product.getName());
@@ -161,6 +169,7 @@ public class ProductService {
         dto.setAuthor(product.getAuthor());
         dto.setTypeProduct(product.getTypeProduct().getName());
         dto.setPhoto(product.getPhoto());
+        dto.setComments(comments);
 
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
         return dto;
