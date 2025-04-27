@@ -1,4 +1,4 @@
-package org.yagodka.product.responces;
+package org.yagodka.responces;
 
 import java.util.List;
 

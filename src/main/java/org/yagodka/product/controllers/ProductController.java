@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.yagodka.product.dto.ProductDto;
 import org.yagodka.product.dto.ProductSummaryDto;
 import org.yagodka.product.dto.ProductUpdateDto;
-import org.yagodka.product.responces.StandardResponse;
+import org.yagodka.responces.StandardResponse;
 import org.yagodka.product.services.ProductService;
 
 import java.util.HashMap;
