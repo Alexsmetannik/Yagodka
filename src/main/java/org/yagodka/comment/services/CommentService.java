@@ -12,9 +12,7 @@ import org.yagodka.comment.dto.CommentSummaryDto;
 import org.yagodka.comment.dto.CommentUpdateDto;
 import org.yagodka.comment.entity.Comment;
 import org.yagodka.comment.repository.CommentRepository;
-import org.yagodka.product.dto.ProductUpdateDto;
 import org.yagodka.product.entity.Product;
-import org.yagodka.product.entity.TypeProduct;
 import org.yagodka.product.repository.ProductRepository;
 
 import java.util.Collections;

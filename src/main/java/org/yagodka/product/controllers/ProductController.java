@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.yagodka.product.dto.ProductDto;
 import org.yagodka.product.dto.ProductSummaryDto;
 import org.yagodka.product.dto.ProductUpdateDto;
-import org.yagodka.responces.StandardResponse;
 import org.yagodka.product.services.ProductService;
+import org.yagodka.responces.StandardResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +35,10 @@ public class ProductController {
 
     @GetMapping
     public List<ProductSummaryDto> getAllProducts(
-        @RequestParam(required = false) Integer count,
-        @RequestParam(required = false) String filter,
-        @RequestParam(required = false) String sort) {
-            return productService.getAllProducts(count, filter, sort);
+            @RequestParam(required = false) Integer count,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String sort) {
+        return productService.getAllProducts(count, filter, sort);
     }
 
     @PostMapping("/create")

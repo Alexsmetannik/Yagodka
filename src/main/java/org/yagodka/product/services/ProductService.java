@@ -10,15 +10,14 @@ import org.springframework.web.server.ResponseStatusException;
 import org.yagodka.comment.dto.CommentDto;
 import org.yagodka.comment.entity.Comment;
 import org.yagodka.comment.repository.CommentRepository;
-import org.yagodka.product.entity.Product;
 import org.yagodka.product.dto.ProductDto;
 import org.yagodka.product.dto.ProductSummaryDto;
 import org.yagodka.product.dto.ProductUpdateDto;
+import org.yagodka.product.entity.Product;
 import org.yagodka.product.entity.TypeProduct;
 import org.yagodka.product.repository.ProductRepository;
 import org.yagodka.product.repository.TypeProductRepository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

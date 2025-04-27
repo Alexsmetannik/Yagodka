@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.yagodka.comment.dto.CommentDto;
-import org.yagodka.comment.entity.Comment;
 
 import java.util.List;
 

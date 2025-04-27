@@ -11,9 +11,6 @@ import org.yagodka.comment.dto.CommentDto;
 import org.yagodka.comment.dto.CommentSummaryDto;
 import org.yagodka.comment.dto.CommentUpdateDto;
 import org.yagodka.comment.services.CommentService;
-import org.yagodka.product.dto.ProductDto;
-import org.yagodka.product.dto.ProductSummaryDto;
-import org.yagodka.product.dto.ProductUpdateDto;
 import org.yagodka.responces.StandardResponse;
 
 import java.util.HashMap;

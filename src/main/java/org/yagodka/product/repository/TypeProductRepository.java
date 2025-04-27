@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.yagodka.product.entity.TypeProduct;
 
 @Repository
-public interface TypeProductRepository  extends JpaRepository<TypeProduct, Long> {
+public interface TypeProductRepository extends JpaRepository<TypeProduct, Long> {
     TypeProduct findByName(String name);
 }
