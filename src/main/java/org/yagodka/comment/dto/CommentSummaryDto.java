@@ -10,7 +10,7 @@ import org.yagodka.product.entity.Product;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+public class CommentSummaryDto {
     @JsonProperty("id")
     private Long id;
 
