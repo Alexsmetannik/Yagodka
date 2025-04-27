@@ -34,7 +34,7 @@ public class Product {
     private String author;
 
     @Column(length = 1000)
-    private String photos;
+    private String photo;
 
     public Long getId() {
         return id;
@@ -84,11 +84,11 @@ public class Product {
         this.author = author;
     }
 
-    public String getPhotos() {
-        return photos;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

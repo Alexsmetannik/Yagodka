@@ -36,9 +36,9 @@ public class ProductDto {
     @JsonProperty("author")
     private String author;
 
-    @Size(max = 1000, message = "photos must be less than 1000 characters")
-    @JsonProperty("photos")
-    private String photos;
+    @Size(max = 1000, message = "photo must be less than 1000 characters")
+    @JsonProperty("photo")
+    private String photo;
 
     public String getTypeProduct() {
         return typeProduct;
@@ -80,11 +80,11 @@ public class ProductDto {
         this.overallScore = overallScore;
     }
 
-    public String getPhotos() {
-        return photos;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

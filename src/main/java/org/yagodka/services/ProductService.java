@@ -107,7 +107,7 @@ public class ProductService {
         product.setDescription(productDto.getDescription());
         product.setOverallScore(productDto.getOverallScore());
         product.setAuthor(productDto.getAuthor());
-        product.setPhotos(productDto.getPhotos());
+        product.setPhoto(productDto.getPhoto());
 
         return productRepository.save(product).getId();
     }
@@ -127,8 +127,8 @@ public class ProductService {
         if (updateDto.getOverallScore() != null) {
             product.setOverallScore(updateDto.getOverallScore());
         }
-        if (updateDto.getPhotos() != null) {
-            product.setPhotos(updateDto.getPhotos());
+        if (updateDto.getPhoto() != null) {
+            product.setPhoto(updateDto.getPhoto());
         }
         if (updateDto.getTypeProduct() != null) {
             TypeProduct typeProduct = typeProductRepository.findByName(updateDto.getTypeProduct());
@@ -160,6 +160,7 @@ public class ProductService {
         dto.setOverallScore(product.getOverallScore());
         dto.setAuthor(product.getAuthor());
         dto.setTypeProduct(product.getTypeProduct().getName());
+        dto.setPhoto(product.getPhoto());
 
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
         return dto;
@@ -174,7 +175,7 @@ public class ProductService {
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setOverallScore(product.getOverallScore());
-        dto.setPhotos(product.getPhotos());
+        dto.setPhoto(product.getPhoto());
         dto.setTypeProduct(product.getTypeProduct().getName());
 
         log.trace("Converted product {} to DTO", product.getId());
