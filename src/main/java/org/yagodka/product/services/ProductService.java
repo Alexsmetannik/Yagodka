@@ -155,12 +155,10 @@ public class ProductService {
         return HttpStatus.NO_CONTENT;
     }
 
-    private ProductDto convertToDto(Product product, ProductDto productDto) {
+    private ProductDto convertToDto(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null");
         }
-
-        List<Comment> comments = commentRepository.findAll(productDto.getComments());
 
         ProductDto dto = new ProductDto();
         dto.setName(product.getName());
@@ -169,9 +167,25 @@ public class ProductService {
         dto.setAuthor(product.getAuthor());
         dto.setTypeProduct(product.getTypeProduct().getName());
         dto.setPhoto(product.getPhoto());
-        dto.setComments(comments);
+
+        List<Comment> comments = commentRepository.findByProductId(product.getId());
+        dto.setComments(comments.stream()
+                .map(this::convertCommentToDto)
+                .collect(Collectors.toList()));
 
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
+        return dto;
+    }
+
+    private CommentDto convertCommentToDto(Comment comment) {
+        CommentDto dto = new CommentDto();
+        dto.setId(comment.getId());
+        dto.setProductId(comment.getProductId().getId());
+        dto.setDignities(comment.getDignities());
+        dto.setDisadvantages(comment.getDisadvantages());
+        dto.setResult(comment.getResult());
+        dto.setMyScore(comment.getMyScore());
+        dto.setAuthor(comment.getAuthor());
         return dto;
     }
 

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.yagodka.comment.dto.CommentDto;
 import org.yagodka.comment.entity.Comment;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class ProductDto {
     private String photo;
 
     @JsonProperty("comments")
-    private List<Comment> comments;
+    private List<CommentDto> comments;
 
     public Long getId() {
         return id;
@@ -104,11 +105,11 @@ public class ProductDto {
         this.photo = photo;
     }
 
-    public List<Comment> getComments() {
+    public List<CommentDto> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentDto> comments) {
         this.comments = comments;
     }
 }
