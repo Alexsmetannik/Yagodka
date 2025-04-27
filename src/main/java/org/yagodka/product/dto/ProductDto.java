@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
+    @JsonProperty("id")
+    private Long id;
 
     @NotBlank(message = "{product.type.required}")
     @JsonProperty("type")
@@ -26,8 +28,8 @@ public class ProductDto {
     private String description;
 
     @NotNull(message = "{product.overallScore.required}")
-    @DecimalMin(value = "0.0", message = "overall score must be at least 0.0")
-    @DecimalMax(value = "5.0", message = "overall score must be at most 5.0")
+    @DecimalMin(value = "0.0", message = "overallScore must be at least 0.0")
+    @DecimalMax(value = "5.0", message = "overallScore must be at most 5.0")
     @JsonProperty("overall score")
     private Double overallScore;
 
@@ -39,6 +41,14 @@ public class ProductDto {
     @Size(max = 1000, message = "photo must be less than 1000 characters")
     @JsonProperty("photo")
     private String photo;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTypeProduct() {
         return typeProduct;

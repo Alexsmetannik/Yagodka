@@ -5,19 +5,11 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.yagodka.product.entity.Product;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
-    @JsonProperty("id")
-    private Long id;
-
-    @NotBlank(message = "{comment.productId.required}")
-    @JsonProperty("productId")
-    private Product productId;
-
+public class CommentUpdateDto {
     @Size(max = 1000, message = "dignities must be less than 1000 characters")
     @JsonProperty("dignities")
     private String dignities;
@@ -36,27 +28,6 @@ public class CommentDto {
     @DecimalMax(value = "5.0", message = "myScore must be at most 5.0")
     @JsonProperty("my score")
     private Double myScore;
-
-    @NotBlank(message = "{comment.author.required}")
-    @Size(max = 50, message = "author must be less than 50 characters")
-    @JsonProperty("author")
-    private String author;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
 
     public String getDignities() {
         return dignities;
@@ -88,13 +59,5 @@ public class CommentDto {
 
     public void setMyScore(Double myScore) {
         this.myScore = myScore;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 }

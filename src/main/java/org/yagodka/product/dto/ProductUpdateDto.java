@@ -25,8 +25,8 @@ public class ProductUpdateDto {
     @JsonProperty("description")
     private String description;
 
-    @DecimalMin(value = "0.0", message = "overall score must be at least 0.0")
-    @DecimalMax(value = "5.0", message = "overall score must be at most 5.0")
+    @DecimalMin(value = "0.0", message = "overallScore must be at least 0.0")
+    @DecimalMax(value = "5.0", message = "overallScore must be at most 5.0")
     @JsonProperty("overall score")
     private Double overallScore;
 
