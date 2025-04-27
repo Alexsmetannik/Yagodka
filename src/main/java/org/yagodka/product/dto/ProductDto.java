@@ -1,9 +1,7 @@
-package org.yagodka.dto.models;
+package org.yagodka.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,20 +9,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductUpdateDto {
+public class ProductDto {
 
-    @Size(max = 50, message = "type must be less than 50 characters")
+    @NotBlank(message = "{product.type.required}")
     @JsonProperty("type")
     private String typeProduct;
 
+    @NotBlank(message = "{product.name.required}")
     @Size(max = 30, message = "name must be less than 30 characters")
     @JsonProperty("name")
     private String name;
 
+    @NotBlank(message = "{product.description.required}")
     @Size(max = 1000, message = "description must be less than 1000 characters")
     @JsonProperty("description")
     private String description;
 
+    @NotNull(message = "{product.overallScore.required}")
     @DecimalMin(value = "0.0", message = "overall score must be at least 0.0")
     @DecimalMax(value = "5.0", message = "overall score must be at most 5.0")
     @JsonProperty("overall score")
@@ -34,6 +35,11 @@ public class ProductUpdateDto {
     @DecimalMax(value = "5.0", message = "myScore must be at most 5.0")
     @JsonProperty("myScore")
     private Double myScore;
+
+    @NotBlank(message = "{product.author.required}")
+    @Size(max = 50, message = "author must be less than 50 characters")
+    @JsonProperty("author")
+    private String author;
 
     @Size(max = 1000, message = "photo must be less than 1000 characters")
     @JsonProperty("photo")
@@ -61,6 +67,14 @@ public class ProductUpdateDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Double getOverallScore() {

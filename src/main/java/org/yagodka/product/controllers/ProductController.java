@@ -1,4 +1,4 @@
-package org.yagodka.controllers;
+package org.yagodka.product.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.yagodka.dto.models.ProductDto;
-import org.yagodka.dto.models.ProductSummaryDto;
-import org.yagodka.dto.models.ProductUpdateDto;
-import org.yagodka.dto.responces.StandardResponse;
-import org.yagodka.services.ProductService;
+import org.yagodka.product.dto.ProductDto;
+import org.yagodka.product.dto.ProductSummaryDto;
+import org.yagodka.product.dto.ProductUpdateDto;
+import org.yagodka.product.responces.StandardResponse;
+import org.yagodka.product.services.ProductService;
 
 import java.util.HashMap;
 import java.util.List;

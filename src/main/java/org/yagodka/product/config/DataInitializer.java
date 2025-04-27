@@ -1,10 +1,10 @@
-package org.yagodka.config;
+package org.yagodka.product.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.yagodka.entity.TypeProduct;
-import org.yagodka.repository.TypeProductRepository;
+import org.yagodka.product.entity.TypeProduct;
+import org.yagodka.product.repository.TypeProductRepository;
 
 import java.util.List;
 

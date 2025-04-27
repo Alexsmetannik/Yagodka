@@ -1,4 +1,4 @@
-package org.yagodka.services;
+package org.yagodka.product.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import org.yagodka.entity.Product;
-import org.yagodka.dto.models.ProductDto;
-import org.yagodka.dto.models.ProductSummaryDto;
-import org.yagodka.dto.models.ProductUpdateDto;
-import org.yagodka.entity.TypeProduct;
-import org.yagodka.repository.ProductRepository;
-import org.yagodka.repository.TypeProductRepository;
+import org.yagodka.product.entity.Product;
+import org.yagodka.product.dto.ProductDto;
+import org.yagodka.product.dto.ProductSummaryDto;
+import org.yagodka.product.dto.ProductUpdateDto;
+import org.yagodka.product.entity.TypeProduct;
+import org.yagodka.product.repository.ProductRepository;
+import org.yagodka.product.repository.TypeProductRepository;
 
 import java.util.Collections;
 import java.util.Comparator;

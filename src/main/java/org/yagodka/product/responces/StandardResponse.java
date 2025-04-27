@@ -1,4 +1,4 @@
-package org.yagodka.dto.responces;
+package org.yagodka.product.responces;
 
 import java.util.List;
 

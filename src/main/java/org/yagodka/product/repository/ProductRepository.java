@@ -1,8 +1,8 @@
-package org.yagodka.repository;
+package org.yagodka.product.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.yagodka.entity.Product;
+import org.yagodka.product.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {

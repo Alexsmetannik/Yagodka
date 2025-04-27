@@ -1,42 +1,31 @@
-package org.yagodka.entity;
+package org.yagodka.product.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "products")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductSummaryDto {
+
+    @JsonProperty("id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "type_product_id", nullable = false)
-    private TypeProduct typeProduct;
+    @JsonProperty("type")
+    private String typeProduct;
 
-    @Column(nullable = false, length = 30)
+    @JsonProperty("name")
     private String name;
 
-    @Column(length = 1000)
-    private String description;
-
-    @Column(columnDefinition = "NUMERIC(3,1)")
+    @JsonProperty("overall score")
     private Double overallScore;
 
-    @Column(columnDefinition = "NUMERIC(3,1)")
+    @JsonProperty("myScore")
     private Double myScore;
 
-    @Column(nullable = false, length = 50)
-    private String author;
-
-    @Column(length = 1000)
+    @JsonProperty("photo")
     private String photo;
 
     public Long getId() {
@@ -47,11 +36,11 @@ public class Product {
         this.id = id;
     }
 
-    public TypeProduct getTypeProduct() {
+    public String getTypeProduct() {
         return typeProduct;
     }
 
-    public void setTypeProduct(TypeProduct typeProduct) {
+    public void setTypeProduct(String typeProduct) {
         this.typeProduct = typeProduct;
     }
 
@@ -61,14 +50,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Double getOverallScore() {
@@ -85,14 +66,6 @@ public class Product {
 
     public void setMyScore(Double myScore) {
         this.myScore = myScore;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getPhoto() {

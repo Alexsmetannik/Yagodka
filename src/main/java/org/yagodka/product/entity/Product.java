@@ -1,0 +1,105 @@
+package org.yagodka.product.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "type_product_id", nullable = false)
+    private TypeProduct typeProduct;
+
+    @Column(nullable = false, length = 30)
+    private String name;
+
+    @Column(length = 1000)
+    private String description;
+
+    @Column(columnDefinition = "NUMERIC(3,1)")
+    private Double overallScore;
+
+    @Column(columnDefinition = "NUMERIC(3,1)")
+    private Double myScore;
+
+    @Column(nullable = false, length = 50)
+    private String author;
+
+    @Column(length = 1000)
+    private String photo;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TypeProduct getTypeProduct() {
+        return typeProduct;
+    }
+
+    public void setTypeProduct(TypeProduct typeProduct) {
+        this.typeProduct = typeProduct;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getOverallScore() {
+        return overallScore;
+    }
+
+    public void setOverallScore(Double overallScore) {
+        this.overallScore = overallScore;
+    }
+
+    public Double getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(Double myScore) {
+        this.myScore = myScore;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+}
