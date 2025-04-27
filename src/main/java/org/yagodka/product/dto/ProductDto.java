@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.yagodka.comment.entity.Comment;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -41,6 +44,9 @@ public class ProductDto {
     @Size(max = 1000, message = "photo must be less than 1000 characters")
     @JsonProperty("photo")
     private String photo;
+
+    @JsonProperty("commentId")
+    private List<Comment> commentId;
 
     public Long getId() {
         return id;
@@ -96,5 +102,13 @@ public class ProductDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public List<Comment> getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(List<Comment> commentId) {
+        this.commentId = commentId;
     }
 }

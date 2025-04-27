@@ -19,7 +19,7 @@ public class Comment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "productId", nullable = false)
     private Product productId;
 
     @Column(length = 1000)
