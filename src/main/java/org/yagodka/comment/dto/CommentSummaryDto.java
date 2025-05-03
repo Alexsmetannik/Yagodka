@@ -13,10 +13,6 @@ public class CommentSummaryDto {
     @JsonProperty("id")
     private Long id;
 
-    @NotBlank(message = "{comment.productId.required}")
-    @JsonProperty("productId")
-    private Long productId;
-
     @Size(max = 1000, message = "dignities must be less than 1000 characters")
     @JsonProperty("dignities")
     private String dignities;
@@ -47,14 +43,6 @@ public class CommentSummaryDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public String getDignities() {

@@ -39,9 +39,6 @@ public class Product {
     @Column(length = 1000)
     private String photo;
 
-    @OneToMany(mappedBy = "product")
-    private List<Comment> comments;
-
     public Long getId() {
         return id;
     }
@@ -96,13 +93,5 @@ public class Product {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }

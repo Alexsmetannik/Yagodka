@@ -167,11 +167,6 @@ public class ProductService {
         dto.setTypeProduct(product.getTypeProduct().getName());
         dto.setPhoto(product.getPhoto());
 
-        List<Comment> comments = commentRepository.findByProductId(product.getId());
-        dto.setComments(comments.stream()
-                .map(this::convertCommentToDto)
-                .collect(Collectors.toList()));
-
         log.debug("Converted Product to DTO: {}", dto); // Добавьте логирование
         return dto;
     }
@@ -179,7 +174,6 @@ public class ProductService {
     private CommentDto convertCommentToDto(Comment comment) {
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());

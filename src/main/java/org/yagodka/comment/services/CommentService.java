@@ -35,8 +35,6 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public CommentDto getCommentsByProductId(Long productId) {
-        List<Comment> comments = commentRepository.findByProductId(productId);
-
         log.info("Fetching comment with id: {}", productId);
 
         return commentRepository.findById(productId)
@@ -71,14 +69,8 @@ public class CommentService {
     }
 
     public Long createComment(CommentDto commentDto) {
-        Optional<Product> product = productRepository.findById(commentDto.getProductId());
-        if (product.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid product id");
-        }
-
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
-        comment.setProduct(product.orElse(null));
         comment.setDignities(commentDto.getDignities());
         comment.setDisadvantages(commentDto.getDisadvantages());
         comment.setResult(commentDto.getResult());
@@ -125,7 +117,6 @@ public class CommentService {
 
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());
@@ -143,7 +134,6 @@ public class CommentService {
 
         CommentSummaryDto dto = new CommentSummaryDto();
         dto.setId(comment.getId());
-        dto.setProductId(comment.getProduct().getId());
         dto.setDignities(comment.getDignities());
         dto.setDisadvantages(comment.getDisadvantages());
         dto.setResult(comment.getResult());

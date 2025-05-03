@@ -18,10 +18,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product", nullable = false)
-    private Product product;
-
     @Column(length = 1000)
     private String dignities;
 
@@ -43,14 +39,6 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public String getDignities() {

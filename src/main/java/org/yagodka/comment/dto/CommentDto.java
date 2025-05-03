@@ -1,10 +1,13 @@
 package org.yagodka.comment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.yagodka.product.entity.Product;
 
 @Data
 @NoArgsConstructor
@@ -12,10 +15,6 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
     @JsonProperty("id")
     private Long id;
-
-    @NotBlank(message = "{comment.productId.required}")
-    @JsonProperty("productId")
-    private Long productId;
 
     @Size(max = 1000, message = "dignities must be less than 1000 characters")
     @JsonProperty("dignities")
@@ -47,14 +46,6 @@ public class CommentDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public String getDignities() {
@@ -96,4 +87,5 @@ public class CommentDto {
     public void setAuthor(String author) {
         this.author = author;
     }
+
 }

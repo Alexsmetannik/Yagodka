@@ -45,9 +45,6 @@ public class ProductDto {
     @JsonProperty("photo")
     private String photo;
 
-    @JsonProperty("comments")
-    private List<CommentDto> comments;
-
     public Long getId() {
         return id;
     }
@@ -102,13 +99,5 @@ public class ProductDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public List<CommentDto> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CommentDto> comments) {
-        this.comments = comments;
     }
 }
