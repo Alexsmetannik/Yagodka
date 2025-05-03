@@ -1,13 +1,10 @@
 package org.yagodka.comment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.yagodka.product.entity.Product;
 
 @Data
 @NoArgsConstructor

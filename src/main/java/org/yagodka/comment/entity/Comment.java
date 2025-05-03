@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.yagodka.product.entity.Product;
 
 @Entity
 @Table(name = "comments")

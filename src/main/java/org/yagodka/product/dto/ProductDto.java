@@ -5,9 +5,6 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.yagodka.comment.dto.CommentDto;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
