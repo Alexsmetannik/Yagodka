@@ -1,13 +1,13 @@
 {
   "info": {
-    "_postman_id": "8db08df3-a769-4b75-9c42-4227c95643ea",
+    "_postman_id": "3bfc9829-7aa1-4b67-be43-49b2dca5d619",
     "name": "Yagodka",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "16273659"
   },
   "item": [
     {
-      "name": "/product/create",
+      "name": "/public/entity",
       "request": {
         "auth": {
           "type": "noauth"
@@ -16,7 +16,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"name\": \"Бад\",\r\n    \"description\": \"Ниже среднего пиво\",\r\n    \"overall score\": 1.0,\r\n    \"author\": \"Александр Галкин\",\r\n    \"photo\": \"https://1111\",\r\n    \"type\": \"BEER\"\r\n}",
+          "raw": "{\r\n    \"type\": \"bear\",\r\n    \"displayName\": \"Пиво\",\r\n    \"description\": \"вкусный напиток\",\r\n    \"estimation\": 10,\r\n    \"image\": \"https://translate.yandex.ru/?utm_source=ntp_chrome\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -24,21 +24,48 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/public/product/create",
+          "raw": "http://localhost:8080/v1/public/entity",
+          "protocol": "http",
           "host": [
-            "{{baseUrl}}"
+            "localhost"
           ],
+          "port": "8080",
           "path": [
+            "v1",
             "public",
-            "product",
-            "create"
+            "entity"
           ]
         }
       },
       "response": []
     },
     {
-      "name": "/product/{{productId}}",
+      "name": "/public/entity/list",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/public/entity/list",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "v1",
+            "public",
+            "entity",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/public/entity/{id}",
       "request": {
         "auth": {
           "type": "noauth"
@@ -47,7 +74,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"photo\": \"https://translate/\"\r\n}",
+          "raw": "{\r\n    \"type\": \"beer\",\r\n    \"displayName\": \"Пиво светлое\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -55,43 +82,24 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}",
+          "raw": "http://localhost:8080/v1/public/entity/1",
+          "protocol": "http",
           "host": [
-            "{{baseUrl}}"
+            "localhost"
           ],
+          "port": "8080",
           "path": [
+            "v1",
             "public",
-            "product",
-            "{{productId}}"
+            "entity",
+            "1"
           ]
         }
       },
       "response": []
     },
     {
-      "name": "/products/{{productId}}",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/products/{{productId}}",
+      "name": "/public/entity/{id}",
       "request": {
         "auth": {
           "type": "noauth"
@@ -99,354 +107,21 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}",
+          "raw": "http://localhost:8080/v1/public/entity/1",
+          "protocol": "http",
           "host": [
-            "{{baseUrl}}"
+            "localhost"
           ],
+          "port": "8080",
           "path": [
+            "v1",
             "public",
-            "product",
-            "{{productId}}"
+            "entity",
+            "1"
           ]
         }
       },
       "response": []
-    },
-    {
-      "name": "/product",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product?count=5&sort=desc&filter=id",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product"
-          ],
-          "query": [
-            {
-              "key": "count",
-              "value": "5"
-            },
-            {
-              "key": "sort",
-              "value": "desc"
-            },
-            {
-              "key": "filter",
-              "value": "id"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/comment/create",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"dignities\": \"вкусно\",\r\n    \"disadvantages\": \"не вкусно\",\r\n    \"my score\": 1.0,\r\n    \"result\": \"и вкусно, и не вкусно\",\r\n    \"author\": \"Александр Галкин\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/comment/create",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "comment",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/comment/{{commentId}}",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/comment/{{commentId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "comment",
-            "{{commentId}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/comment/all",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/comment/all",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "comment",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/comment/{{commentId}}",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/comment/{{commentId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "comment",
-            "{{commentId}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/product/{{productId}}/images",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "\r",
-              "if (pm.response.code === 200)\r",
-              "{\r",
-              "    var jsonData = pm.response.json();\r",
-              "\r",
-              "    var filename = jsonData.images[0].filename;\r",
-              "    pm.collectionVariables.set(\"filename\", filename);\r",
-              "\r",
-              "}\r",
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {}
-          }
-        }
-      ],
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "multipart/form-data",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "files",
-              "type": "file",
-              "src": "/D:/СКАЧКА/265a7b03194d90ea6befac7d3b2484ec.jpg"
-            }
-          ]
-        },
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/images",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "images"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/product/{{productId}}/images",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/images",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "images"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/product/{{productId}}/images/{{filename}}",
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/images/{{filename}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "images",
-            "{{filename}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/product/{{productId}}/images/{{filename}}",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {}
-          }
-        }
-      ],
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/public/product/{{productId}}/images/{{filename}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "public",
-            "product",
-            "{{productId}}",
-            "images",
-            "{{filename}}"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8080/api/v1",
-      "type": "string"
-    },
-    {
-      "key": "token",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "userId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "productId",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "filename",
-      "value": ""
-    },
-    {
-      "key": "commentId",
-      "value": "",
-      "type": "string"
     }
   ]
 }
