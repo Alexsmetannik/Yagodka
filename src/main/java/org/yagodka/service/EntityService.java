@@ -91,11 +91,6 @@ public class EntityService {
         entityRepository.deleteById(id);
     }
 
-    public MyEntity findEntityById(Long id) {
-        return entityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entity not found"));
-    }
-
     private String getCurrentDateTime() {
         return ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
                 .format(DATE_FORMATTER);

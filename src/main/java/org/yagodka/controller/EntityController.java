@@ -10,7 +10,7 @@ import org.yagodka.model.EntityRequest;
 import org.yagodka.model.EntityResponse;
 import org.yagodka.service.EntityService;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,7 +27,7 @@ public class EntityController {
 
         try {
             if (order != null && !order.isEmpty() && !"ASC".equalsIgnoreCase(order) && !"DESC".equalsIgnoreCase(order)) {
-                ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -42,7 +42,7 @@ public class EntityController {
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("entities not found"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entities not found"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -53,11 +53,11 @@ public class EntityController {
 
         try {
             EntityResponse createdEntity = entityService.createEntity(request);
-            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Arrays.asList(createdEntity));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Collections.singletonList(createdEntity));
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (Exception e) {
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("entity not create"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity not create"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -69,23 +69,23 @@ public class EntityController {
 
         try {
             if (request.getEstimation() != null && (request.getEstimation() < 0 || request.getEstimation() > 10)) {
-                ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             EntityResponse updatedEntity = entityService.updateEntity(id, request);
-            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Arrays.asList(updatedEntity));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Collections.singletonList(updatedEntity));
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("entities not found"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entities not found"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -100,13 +100,13 @@ public class EntityController {
 
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<Void> response = ApiResponse.error(Arrays.asList("entities not found"));
+                ApiResponse<Void> response = ApiResponse.error(List.of("entities not found"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            ApiResponse<Void> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+            ApiResponse<Void> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            ApiResponse<Void> response = ApiResponse.error(Arrays.asList("requrst is bad"));
+            ApiResponse<Void> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
