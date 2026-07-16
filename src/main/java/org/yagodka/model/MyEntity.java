@@ -21,24 +21,24 @@ public class MyEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Type cannot be empty")
+    @NotBlank(message = "Type обязателен для заполнения")
     private String type;
 
     @Column(name = "display_name", nullable = false)
-    @NotBlank(message = "Display name cannot be empty")
+    @NotBlank(message = "DisplayName обязателен для заполнения")
     private String displayName;
 
     @Column(nullable = false)
-    @NotBlank(message = "Description cannot be empty")
+    @NotBlank(message = "Description обязателен для заполнения")
     private String description;
 
     @Column(nullable = false)
-    @Min(value = 0, message = "Estimation must be between 0 and 10")
-    @Max(value = 10, message = "Estimation must be between 0 and 10")
+    @Min(value = 0, message = "Значение Estimation должно быть от 0 до 10")
+    @Max(value = 10, message = "Значение Estimation должно быть от 0 до 10")
     private Integer estimation;
 
     @Column(nullable = false)
-    @NotBlank(message = "Image cannot be empty")
+    @NotBlank(message = "Image обязателен для заполнения")
     private String image;
 
     @Column(name = "add_date", nullable = false)

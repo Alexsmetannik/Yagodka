@@ -60,7 +60,7 @@ public class EntityService {
 
     public EntityResponse updateEntity(Long id, EntityRequest request) {
         MyEntity existingMyEntity = entityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entity not found"));
+                .orElseThrow(() -> new RuntimeException("Entity не найден"));
 
         if (request.getType() != null) {
             existingMyEntity.setType(request.getType());
@@ -86,7 +86,7 @@ public class EntityService {
 
     public void deleteEntity(Long id) {
         if (!entityRepository.existsById(id)) {
-            throw new RuntimeException("Entity not found");
+            throw new RuntimeException("Entity не найден");
         }
         entityRepository.deleteById(id);
     }

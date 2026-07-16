@@ -13,20 +13,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntityRequest {
 
-    @NotBlank(message = "Type cannot be empty")
+    @NotBlank(message = "Type обязателен для заполнения")
     private String type;
 
-    @NotBlank(message = "Display name cannot be empty")
+    @NotBlank(message = "DisplayName обязателен для заполнения")
     private String displayName;
 
-    @NotBlank(message = "Description cannot be empty")
+    @NotBlank(message = "Description обязателен для заполнения")
     private String description;
 
-    @NotNull(message = "Estimation cannot be null")
-    @Min(value = 0, message = "Estimation must be between 0 and 10")
-    @Max(value = 10, message = "Estimation must be between 0 and 10")
+    @NotNull(message = "Estimation обязателен для заполнения")
+    @Min(value = 0, message = "Значение Estimation должно быть от 0 до 10")
+    @Max(value = 10, message = "Значение Estimation должно быть от 0 до 10")
     private Integer estimation;
 
-    @NotBlank(message = "Image cannot be empty")
+    @NotBlank(message = "Image обязателен для заполнения")
     private String image;
 }
