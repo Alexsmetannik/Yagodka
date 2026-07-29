@@ -26,17 +26,17 @@ public class EntityController {
             @RequestParam(required = false) String order) {
 
         try {
-            if (order != null && !order.isEmpty() && !"ASC".equalsIgnoreCase(order) && !"DESC".equalsIgnoreCase(order)) {
+            if (order != null && !order.isEmpty() &&
+                    !"ASC".equalsIgnoreCase(order) && !"DESC".equalsIgnoreCase(order)) {
                 ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            List<EntityResponse> entities = entityService.getEntities(filter, order);
-
-            if (entities.isEmpty()) {
-                ApiResponse<List<EntityResponse>> response = ApiResponse.success(entities);
-                return ResponseEntity.ok(response);
+            if (order == null || order.isEmpty()) {
+                order = "ASC";
             }
+
+            List<EntityResponse> entities = entityService.getEntities(filter, order);
 
             ApiResponse<List<EntityResponse>> response = ApiResponse.success(entities);
             return ResponseEntity.ok(response);

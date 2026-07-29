@@ -23,18 +23,14 @@ public class EntityService {
     public List<EntityResponse> getEntities(String filter, String order) {
         List<MyEntity> entities;
 
+        if (order == null || order.trim().isEmpty()) {
+            order = "ASC";
+        }
+
         if (filter != null && !filter.trim().isEmpty()) {
-            if ("DESC".equalsIgnoreCase(order)) {
-                entities = entityRepository.findByFilterWithDescOrder(filter);
-            } else {
-                entities = entityRepository.findByFilterWithDefaultOrder(filter);
-            }
+            entities = entityRepository.findByFilterWithOrder(filter.trim(), order);
         } else {
-            if ("DESC".equalsIgnoreCase(order)) {
-                entities = entityRepository.findAllWithDescOrder();
-            } else {
-                entities = entityRepository.findAllWithDefaultOrder();
-            }
+            entities = entityRepository.findAllWithOrder(order);
         }
 
         return entities.stream()

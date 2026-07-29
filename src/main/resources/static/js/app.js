@@ -4,6 +4,8 @@ const API_BASE_URL = 'http://localhost:8080/v1/public/entity';
 // Состояние приложения
 let currentProductId = null;
 let isEditMode = false;
+let currentFilter = '';
+let currentOrder = 'ASC';
 
 // DOM элементы
 const productList = document.getElementById('productList');
@@ -16,6 +18,11 @@ const submitBtn = document.getElementById('submitBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+// Элементы поиска и сортировки
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+const sortOrder = document.getElementById('sortOrder');
 
 // Поля формы
 const typeInput = document.getElementById('type');
@@ -33,9 +40,22 @@ const imageHint = document.getElementById('imageHint');
 const estimationError = document.getElementById('estimationError');
 
 // Загрузка списка товаров при старте
-document.addEventListener('DOMContentLoaded', loadProducts);
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    // Устанавливаем сортировку ASC по умолчанию
+    sortOrder.value = 'ASC';
+});
 
-// Обработчики событий
+// Обработчики событий для поиска и сортировки
+searchBtn.addEventListener('click', handleSearch);
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        handleSearch();
+    }
+});
+sortOrder.addEventListener('change', handleSearch);
+
+// Обработчики событий для модальных окон
 addProductBtn.addEventListener('click', () => openAddModal());
 cancelBtn.addEventListener('click', closeModal);
 cancelDeleteBtn.addEventListener('click', closeDeleteModal);
@@ -77,125 +97,32 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Функция валидации отдельного поля
-function validateField(e) {
-    const field = e.target;
-    const fieldName = field.id;
-    let isValid = true;
-    let hintElement = null;
-    let maxLength = 0;
-
-    // Определяем максимальную длину и элемент подсказки
-    switch(fieldName) {
-        case 'type':
-            hintElement = typeHint;
-            maxLength = 20;
-            break;
-        case 'displayName':
-            hintElement = displayNameHint;
-            maxLength = 20;
-            break;
-        case 'description':
-            hintElement = descriptionHint;
-            maxLength = 200;
-            break;
-        case 'image':
-            hintElement = imageHint;
-            maxLength = 50;
-            break;
-        case 'estimation':
-            hintElement = estimationHint;
-            break;
-        default:
-            return;
-    }
-
-    // Валидация для текстовых полей
-    if (fieldName !== 'estimation') {
-        const value = field.value;
-        if (value.length > maxLength) {
-            field.classList.add('error');
-            hintElement.classList.add('error');
-            isValid = false;
-        } else {
-            field.classList.remove('error');
-            hintElement.classList.remove('error');
-        }
-    }
-
-    // Валидация для оценки
-    if (fieldName === 'estimation') {
-        const value = field.value;
-        const intValue = parseInt(value);
-
-        if (value === '' || value === null || value === undefined) {
-            field.classList.remove('error');
-            estimationError.classList.add('hidden');
-            isValid = true;
-        } else if (!/^-?\d+$/.test(value) || intValue < 0 || intValue > 10) {
-            field.classList.add('error');
-            estimationError.classList.remove('hidden');
-            isValid = false;
-        } else {
-            field.classList.remove('error');
-            estimationError.classList.add('hidden');
-        }
-    }
-
-    // Обновляем состояние кнопки
-    validateForm();
-}
-
-// Валидация всей формы
-function validateForm() {
-    const type = typeInput.value.trim();
-    const displayName = displayNameInput.value.trim();
-    const description = descriptionInput.value.trim();
-    const estimation = estimationInput.value;
-    const image = imageInput.value.trim();
-
-    // Проверка на пустые значения
-    const isFilled = type !== '' &&
-        displayName !== '' &&
-        description !== '' &&
-        estimation !== '' &&
-        image !== '';
-
-    // Проверка на превышение длины
-    const isTypeValid = type.length <= 20;
-    const isDisplayNameValid = displayName.length <= 20;
-    const isDescriptionValid = description.length <= 200;
-    const isImageValid = image.length <= 50;
-
-    // Проверка оценки
-    const isEstimationValid = validateEstimation();
-
-    // Проверка на наличие ошибок в полях
-    const hasErrors = document.querySelectorAll('.form-group input.error, .form-group textarea.error').length > 0;
-
-    const isValid = isFilled &&
-        isTypeValid &&
-        isDisplayNameValid &&
-        isDescriptionValid &&
-        isImageValid &&
-        isEstimationValid &&
-        !hasErrors;
-
-    submitBtn.disabled = !isValid;
-
-    if (isValid) {
-        submitBtn.classList.add('active');
-    } else {
-        submitBtn.classList.remove('active');
-    }
-
-    return isValid;
+// Функция обработки поиска
+function handleSearch() {
+    currentFilter = searchInput.value.trim();
+    currentOrder = sortOrder.value;
+    loadProducts();
 }
 
 // Функция загрузки товаров
 async function loadProducts() {
     try {
-        const response = await fetch(API_BASE_URL + '/list');
+        let url = API_BASE_URL + '/list';
+        const params = new URLSearchParams();
+
+        if (currentFilter) {
+            params.append('filter', currentFilter);
+        }
+        if (currentOrder) {
+            params.append('order', currentOrder);
+        }
+
+        const queryString = params.toString();
+        if (queryString) {
+            url += '?' + queryString;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.status === 'success') {
@@ -279,6 +206,7 @@ function openAddModal() {
 // Открытие модального окна редактирования
 async function openEditModal(id) {
     try {
+        // Загружаем актуальный список для получения данных товара
         const response = await fetch(API_BASE_URL + '/list');
         const data = await response.json();
         const product = data.entities.find(p => p.id === id);
@@ -401,6 +329,121 @@ async function handleDeleteConfirm() {
         console.error('Ошибка при удалении товара:', error);
         alert('Произошла ошибка при удалении товара');
     }
+}
+
+// Функция валидации отдельного поля
+function validateField(e) {
+    const field = e.target;
+    const fieldName = field.id;
+    let isValid = true;
+    let hintElement = null;
+    let maxLength = 0;
+
+    // Определяем максимальную длину и элемент подсказки
+    switch (fieldName) {
+        case 'type':
+            hintElement = typeHint;
+            maxLength = 20;
+            break;
+        case 'displayName':
+            hintElement = displayNameHint;
+            maxLength = 20;
+            break;
+        case 'description':
+            hintElement = descriptionHint;
+            maxLength = 200;
+            break;
+        case 'image':
+            hintElement = imageHint;
+            maxLength = 50;
+            break;
+        case 'estimation':
+            hintElement = estimationHint;
+            break;
+        default:
+            return;
+    }
+
+    // Валидация для текстовых полей
+    if (fieldName !== 'estimation') {
+        const value = field.value;
+        if (value.length > maxLength) {
+            field.classList.add('error');
+            hintElement.classList.add('error');
+            isValid = false;
+        } else {
+            field.classList.remove('error');
+            hintElement.classList.remove('error');
+        }
+    }
+
+    // Валидация для оценки
+    if (fieldName === 'estimation') {
+        const value = field.value;
+        const intValue = parseInt(value);
+
+        if (value === '' || value === null || value === undefined) {
+            field.classList.remove('error');
+            estimationError.classList.add('hidden');
+            isValid = true;
+        } else if (!/^-?\d+$/.test(value) || intValue < 0 || intValue > 10) {
+            field.classList.add('error');
+            estimationError.classList.remove('hidden');
+            isValid = false;
+        } else {
+            field.classList.remove('error');
+            estimationError.classList.add('hidden');
+        }
+    }
+
+    // Обновляем состояние кнопки
+    validateForm();
+}
+
+// Валидация всей формы
+function validateForm() {
+    const type = typeInput.value.trim();
+    const displayName = displayNameInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const estimation = estimationInput.value;
+    const image = imageInput.value.trim();
+
+    // Проверка на пустые значения
+    const isFilled = type !== '' &&
+        displayName !== '' &&
+        description !== '' &&
+        estimation !== '' &&
+        image !== '';
+
+    // Проверка на превышение длины
+    const isTypeValid = type.length <= 20;
+    const isDisplayNameValid = displayName.length <= 20;
+    const isDescriptionValid = description.length <= 200;
+    const isImageValid = image.length <= 50;
+
+    // Проверка оценки
+    const isEstimationValid = validateEstimation();
+
+    // Проверка на наличие ошибок в полях
+    const hasErrors = document.querySelectorAll('.form-group input.error, .form-group textarea.error').length > 0;
+
+    const isValid = isFilled &&
+        isTypeValid &&
+        isDisplayNameValid &&
+        isDescriptionValid &&
+        isImageValid &&
+        isEstimationValid &&
+        !hasErrors;
+
+    submitBtn.disabled = !isValid;
+
+    if (isValid) {
+        submitBtn.classList.add('active');
+    } else {
+        submitBtn.classList.remove('active');
+    }
+
+    return isValid;
 }
 
 // Валидация оценки
