@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЯГОДКА - Управление товарами</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <!-- Главный заголовок -->
+    <h1 class="main-title">ЯГОДКА</h1>
+
+    <!-- Кнопка добавления товара -->
+    <button id="addProductBtn" class="add-btn">+ Добавить товар</button>
+
+    <!-- Контейнер для списка товаров -->
+    <div id="productList" class="product-list">
+        <!-- Здесь будут отображаться товары -->
+    </div>
+</div>
+
+<!-- Модальное окно для добавления/редактирования -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <h2 id="modalTitle" class="modal-title">Добавление товара</h2>
+        <form id="productForm" class="product-form">
+            <div class="form-group">
+                <label for="type">Тип товара</label>
+                <input type="text" id="type" name="type" required>
+            </div>
+            <div class="form-group">
+                <label for="displayName">Название</label>
+                <input type="text" id="displayName" name="displayName" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="estimation">Оценка</label>
+                <input type="number" id="estimation" name="estimation" min="0" max="10" required>
+                <span id="estimationError" class="error-message hidden">Должно быть целое число от 0 до 10</span>
+            </div>
+            <div class="form-group">
+                <label for="image">Фото (URL)</label>
+                <input type="url" id="image" name="image" placeholder="https://example.com/image.jpg" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancelBtn" class="btn btn-secondary">Назад</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" disabled>Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно для подтверждения удаления -->
+<div id="deleteModal" class="modal hidden">
+    <div class="modal-content delete-modal-content">
+        <h2 class="modal-title">Вы точно хотите удалить товар?</h2>
+        <div class="form-actions">
+            <button id="cancelDeleteBtn" class="btn btn-secondary">Нет</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Да</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
