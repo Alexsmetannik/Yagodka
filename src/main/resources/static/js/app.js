@@ -38,6 +38,31 @@ productForm.addEventListener('input', validateForm);
 // Удаление товара
 confirmDeleteBtn.addEventListener('click', handleDeleteConfirm);
 
+// Закрытие модального окна по клику вне
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+deleteModal.addEventListener('click', (e) => {
+    if (e.target === deleteModal) {
+        closeDeleteModal();
+    }
+});
+
+// Закрытие по клавише Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (!modal.classList.contains('hidden')) {
+            closeModal();
+        }
+        if (!deleteModal.classList.contains('hidden')) {
+            closeDeleteModal();
+        }
+    }
+});
+
 // Функция загрузки товаров
 async function loadProducts() {
     try {
@@ -56,6 +81,30 @@ async function loadProducts() {
     }
 }
 
+// Функция рендеринга звездочек
+function renderStars(estimation) {
+    let starsHtml = '<div class="estimation-container">';
+    starsHtml += '<span class="stars">';
+    for (let i = 0; i < 10; i++) {
+        if (i < estimation) {
+            starsHtml += '<span class="star filled">★</span>';
+        } else {
+            starsHtml += '<span class="star">★</span>';
+        }
+    }
+    starsHtml += '</span>';
+    starsHtml += `<span class="estimation-text">(${estimation}/10)</span>`;
+    starsHtml += '</div>';
+    return starsHtml;
+}
+
+// Функция обрезки описания
+function truncateDescription(description, maxLength = 50) {
+    if (!description) return '';
+    if (description.length <= maxLength) return description;
+    return description.substring(0, maxLength) + '...';
+}
+
 // Функция рендеринга товаров
 function renderProducts(products) {
     if (!products || products.length === 0) {
@@ -65,14 +114,18 @@ function renderProducts(products) {
 
     productList.innerHTML = products.map(product => `
         <div class="product-item" data-id="${product.id}">
-            <img src="${product.image || 'https://via.placeholder.com/300x200?text=Нет+фото'}" 
-                 alt="${product.displayName}" 
-                 class="product-image"
-                 onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-            <div class="product-type">Тип: ${product.type}</div>
+            <div class="product-image-wrapper">
+                <img src="${product.image || 'https://via.placeholder.com/400x400?text=Нет+фото'}" 
+                     alt="${product.displayName}" 
+                     class="product-image"
+                     onerror="this.src='https://via.placeholder.com/400x400?text=Нет+фото'">
+            </div>
+            <div class="product-type">Тип товара: ${product.type}</div>
             <div class="product-name">${product.displayName}</div>
-            <div class="product-description">${product.description}</div>
-            <div class="product-estimation">Оценка: ${'★'.repeat(product.estimation)}${'☆'.repeat(10 - product.estimation)} (${product.estimation}/10)</div>
+            <div class="product-description">${truncateDescription(product.description)}</div>
+            <div class="product-estimation">
+                ${renderStars(product.estimation)}
+            </div>
             <div class="product-actions">
                 <button class="btn btn-secondary" onclick="openEditModal(${product.id})">Редактировать</button>
                 <button class="btn btn-secondary" onclick="openDeleteModal(${product.id})">Удалить</button>
@@ -275,28 +328,3 @@ function clearErrors() {
         el.classList.remove('invalid');
     });
 }
-
-// Закрытие модального окна по клику вне его
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
-    }
-});
-
-deleteModal.addEventListener('click', (e) => {
-    if (e.target === deleteModal) {
-        closeDeleteModal();
-    }
-});
-
-// Обработка клавиши Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        if (!modal.classList.contains('hidden')) {
-            closeModal();
-        }
-        if (!deleteModal.classList.contains('hidden')) {
-            closeDeleteModal();
-        }
-    }
-});

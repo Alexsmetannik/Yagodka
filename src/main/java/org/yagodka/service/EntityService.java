@@ -2,9 +2,9 @@ package org.yagodka.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yagodka.model.MyEntity;
 import org.yagodka.model.EntityRequest;
 import org.yagodka.model.EntityResponse;
+import org.yagodka.model.MyEntity;
 import org.yagodka.repository.EntityRepository;
 
 import java.time.ZoneId;
