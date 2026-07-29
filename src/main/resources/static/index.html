@@ -33,24 +33,29 @@
         <form id="productForm" class="product-form">
             <div class="form-group">
                 <label for="type">Тип товара</label>
-                <input type="text" id="type" name="type" required>
+                <input type="text" id="type" name="type" maxlength="20" required>
+                <span class="hint-text" id="typeHint">Не должно превышать 20 символов</span>
             </div>
             <div class="form-group">
                 <label for="displayName">Название</label>
-                <input type="text" id="displayName" name="displayName" required>
+                <input type="text" id="displayName" name="displayName" maxlength="20" required>
+                <span class="hint-text" id="displayNameHint">Не должно превышать 20 символов</span>
             </div>
             <div class="form-group">
                 <label for="description">Описание</label>
-                <textarea id="description" name="description" rows="3" required></textarea>
+                <textarea id="description" name="description" rows="3" maxlength="200" required></textarea>
+                <span class="hint-text" id="descriptionHint">Не должно превышать 200 символов</span>
             </div>
             <div class="form-group">
                 <label for="estimation">Оценка</label>
                 <input type="number" id="estimation" name="estimation" min="0" max="10" required>
+                <span class="hint-text" id="estimationHint">Должно быть целое число от 0 до 10</span>
                 <span id="estimationError" class="error-message hidden">Должно быть целое число от 0 до 10</span>
             </div>
             <div class="form-group">
-                <label for="image">Фото (URL)</label>
-                <input type="url" id="image" name="image" placeholder="https://example.com/image.jpg" required>
+                <label for="image">Ссылка на фото (URL)</label>
+                <input type="url" id="image" name="image" placeholder="https://example.com/image.jpg" maxlength="50" required>
+                <span class="hint-text" id="imageHint">Не должно превышать 50 символов</span>
             </div>
             <div class="form-actions">
                 <button type="button" id="cancelBtn" class="btn btn-secondary">Назад</button>

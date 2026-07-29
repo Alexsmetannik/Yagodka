@@ -16,7 +16,20 @@ const submitBtn = document.getElementById('submitBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+// Поля формы
+const typeInput = document.getElementById('type');
+const displayNameInput = document.getElementById('displayName');
+const descriptionInput = document.getElementById('description');
 const estimationInput = document.getElementById('estimation');
+const imageInput = document.getElementById('image');
+
+// Элементы подсказок
+const typeHint = document.getElementById('typeHint');
+const displayNameHint = document.getElementById('displayNameHint');
+const descriptionHint = document.getElementById('descriptionHint');
+const estimationHint = document.getElementById('estimationHint');
+const imageHint = document.getElementById('imageHint');
 const estimationError = document.getElementById('estimationError');
 
 // Загрузка списка товаров при старте
@@ -29,11 +42,12 @@ cancelDeleteBtn.addEventListener('click', closeDeleteModal);
 
 productForm.addEventListener('submit', handleFormSubmit);
 
-// Валидация оценки в реальном времени
-estimationInput.addEventListener('input', validateEstimation);
-
-// Валидация всех полей формы
-productForm.addEventListener('input', validateForm);
+// Валидация полей в реальном времени
+typeInput.addEventListener('input', validateField);
+displayNameInput.addEventListener('input', validateField);
+descriptionInput.addEventListener('input', validateField);
+estimationInput.addEventListener('input', validateField);
+imageInput.addEventListener('input', validateField);
 
 // Удаление товара
 confirmDeleteBtn.addEventListener('click', handleDeleteConfirm);
@@ -62,6 +76,121 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// Функция валидации отдельного поля
+function validateField(e) {
+    const field = e.target;
+    const fieldName = field.id;
+    let isValid = true;
+    let hintElement = null;
+    let maxLength = 0;
+
+    // Определяем максимальную длину и элемент подсказки
+    switch(fieldName) {
+        case 'type':
+            hintElement = typeHint;
+            maxLength = 20;
+            break;
+        case 'displayName':
+            hintElement = displayNameHint;
+            maxLength = 20;
+            break;
+        case 'description':
+            hintElement = descriptionHint;
+            maxLength = 200;
+            break;
+        case 'image':
+            hintElement = imageHint;
+            maxLength = 50;
+            break;
+        case 'estimation':
+            hintElement = estimationHint;
+            break;
+        default:
+            return;
+    }
+
+    // Валидация для текстовых полей
+    if (fieldName !== 'estimation') {
+        const value = field.value;
+        if (value.length > maxLength) {
+            field.classList.add('error');
+            hintElement.classList.add('error');
+            isValid = false;
+        } else {
+            field.classList.remove('error');
+            hintElement.classList.remove('error');
+        }
+    }
+
+    // Валидация для оценки
+    if (fieldName === 'estimation') {
+        const value = field.value;
+        const intValue = parseInt(value);
+
+        if (value === '' || value === null || value === undefined) {
+            field.classList.remove('error');
+            estimationError.classList.add('hidden');
+            isValid = true;
+        } else if (!/^-?\d+$/.test(value) || intValue < 0 || intValue > 10) {
+            field.classList.add('error');
+            estimationError.classList.remove('hidden');
+            isValid = false;
+        } else {
+            field.classList.remove('error');
+            estimationError.classList.add('hidden');
+        }
+    }
+
+    // Обновляем состояние кнопки
+    validateForm();
+}
+
+// Валидация всей формы
+function validateForm() {
+    const type = typeInput.value.trim();
+    const displayName = displayNameInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const estimation = estimationInput.value;
+    const image = imageInput.value.trim();
+
+    // Проверка на пустые значения
+    const isFilled = type !== '' &&
+        displayName !== '' &&
+        description !== '' &&
+        estimation !== '' &&
+        image !== '';
+
+    // Проверка на превышение длины
+    const isTypeValid = type.length <= 20;
+    const isDisplayNameValid = displayName.length <= 20;
+    const isDescriptionValid = description.length <= 200;
+    const isImageValid = image.length <= 50;
+
+    // Проверка оценки
+    const isEstimationValid = validateEstimation();
+
+    // Проверка на наличие ошибок в полях
+    const hasErrors = document.querySelectorAll('.form-group input.error, .form-group textarea.error').length > 0;
+
+    const isValid = isFilled &&
+        isTypeValid &&
+        isDisplayNameValid &&
+        isDescriptionValid &&
+        isImageValid &&
+        isEstimationValid &&
+        !hasErrors;
+
+    submitBtn.disabled = !isValid;
+
+    if (isValid) {
+        submitBtn.classList.add('active');
+    } else {
+        submitBtn.classList.remove('active');
+    }
+
+    return isValid;
+}
 
 // Функция загрузки товаров
 async function loadProducts() {
@@ -165,11 +294,11 @@ async function openEditModal(id) {
         submitBtn.textContent = 'Изменить';
         submitBtn.classList.remove('active');
 
-        document.getElementById('type').value = product.type || '';
-        document.getElementById('displayName').value = product.displayName || '';
-        document.getElementById('description').value = product.description || '';
-        document.getElementById('estimation').value = product.estimation || '';
-        document.getElementById('image').value = product.image || '';
+        typeInput.value = product.type || '';
+        displayNameInput.value = product.displayName || '';
+        descriptionInput.value = product.description || '';
+        estimationInput.value = product.estimation || '';
+        imageInput.value = product.image || '';
 
         clearErrors();
         validateForm();
@@ -212,11 +341,11 @@ async function handleFormSubmit(e) {
     }
 
     const formData = {
-        type: document.getElementById('type').value.trim(),
-        displayName: document.getElementById('displayName').value.trim(),
-        description: document.getElementById('description').value.trim(),
-        estimation: parseInt(document.getElementById('estimation').value),
-        image: document.getElementById('image').value.trim()
+        type: typeInput.value.trim(),
+        displayName: displayNameInput.value.trim(),
+        description: descriptionInput.value.trim(),
+        estimation: parseInt(estimationInput.value),
+        image: imageInput.value.trim()
     };
 
     try {
@@ -241,7 +370,7 @@ async function handleFormSubmit(e) {
 
         if (response.ok && result.status === 'success') {
             closeModal();
-            await loadProducts(); // Обновляем список
+            await loadProducts();
         } else {
             alert('Ошибка: ' + (result.errors ? result.errors.join(', ') : 'Не удалось сохранить товар'));
         }
@@ -264,7 +393,7 @@ async function handleDeleteConfirm() {
 
         if (response.ok && result.status === 'success') {
             closeDeleteModal();
-            await loadProducts(); // Обновляем список
+            await loadProducts();
         } else {
             alert('Ошибка: ' + (result.errors ? result.errors.join(', ') : 'Не удалось удалить товар'));
         }
@@ -293,38 +422,20 @@ function validateEstimation() {
     }
 }
 
-// Валидация всей формы
-function validateForm() {
-    const type = document.getElementById('type').value.trim();
-    const displayName = document.getElementById('displayName').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const estimation = document.getElementById('estimation').value;
-    const image = document.getElementById('image').value.trim();
-
-    const isEstimationValid = validateEstimation();
-
-    const isValid = type !== '' &&
-        displayName !== '' &&
-        description !== '' &&
-        estimation !== '' &&
-        image !== '' &&
-        isEstimationValid;
-
-    submitBtn.disabled = !isValid;
-
-    if (isValid) {
-        submitBtn.classList.add('active');
-    } else {
-        submitBtn.classList.remove('active');
-    }
-
-    return isValid;
-}
-
 // Очистка ошибок
 function clearErrors() {
-    estimationError.classList.add('hidden');
-    document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => {
-        el.classList.remove('invalid');
+    // Очищаем ошибки всех полей
+    const fields = [typeInput, displayNameInput, descriptionInput, imageInput];
+    const hints = [typeHint, displayNameHint, descriptionHint, imageHint];
+
+    fields.forEach(field => {
+        field.classList.remove('error');
     });
+
+    hints.forEach(hint => {
+        hint.classList.remove('error');
+    });
+
+    estimationError.classList.add('hidden');
+    estimationInput.classList.remove('error');
 }

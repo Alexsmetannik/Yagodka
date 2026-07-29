@@ -87,7 +87,7 @@ body {
 }
 
 .product-item {
-    background-color: #680505;
+    background-color: #800000;
     border-radius: 12px;
     padding: 20px;
     padding-bottom: 20px;
@@ -327,20 +327,34 @@ body {
     min-height: 80px;
 }
 
-/* Ошибка валидации */
+/* Стили для подсказок */
+.hint-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+    transition: color 0.3s ease;
+}
+
+.hint-text.error {
+    color: #ff0000;
+}
+
+/* Ошибка валидации для поля */
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ff0000;
+    background-color: #fff0f0;
+}
+
+/* Ошибка валидации для оценки */
 .error-message {
     color: #ff0000;
-    font-size: 13px;
-    margin-top: 3px;
+    font-size: 12px;
+    margin-top: 2px;
 }
 
 .error-message.hidden {
     display: none;
-}
-
-.form-group input:invalid:not(:placeholder-shown),
-.form-group textarea:invalid:not(:placeholder-shown) {
-    border-color: #ff0000;
 }
 
 /* Кнопки */
