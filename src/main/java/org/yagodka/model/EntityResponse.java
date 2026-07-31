@@ -11,9 +11,13 @@ public class EntityResponse {
     private Long id;
     private String type;
     private String displayName;
+    private String minus;
+    private String plus;
     private String description;
     private Integer estimation;
     private String image;
+    private Boolean isFavourite;
+    private Long byUser;
     private String addDate;
     private String updateDate;
 
@@ -22,9 +26,13 @@ public class EntityResponse {
                 myEntity.getId(),
                 myEntity.getType(),
                 myEntity.getDisplayName(),
+                myEntity.getMinus(),
+                myEntity.getPlus(),
                 myEntity.getDescription(),
                 myEntity.getEstimation(),
                 myEntity.getImage(),
+                myEntity.getIsFavourite(),
+                myEntity.getByUser(),
                 myEntity.getAddDate(),
                 myEntity.getUpdateDate()
         );

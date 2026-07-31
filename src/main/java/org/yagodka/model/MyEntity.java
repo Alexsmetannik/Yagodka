@@ -20,26 +20,37 @@ public class MyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Type обязателен для заполнения")
+    @Column(name = "type", nullable = false)
+    @NotBlank(message = "type обязателен для заполнения")
     private String type;
 
     @Column(name = "display_name", nullable = false)
-    @NotBlank(message = "DisplayName обязателен для заполнения")
+    @NotBlank(message = "displayName обязателен для заполнения")
     private String displayName;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Description обязателен для заполнения")
+    @Column(name = "minus")
+    private String minus;
+
+    @Column(name = "plus")
+    private String plus;
+
+    @Column(name = "description")
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "estimation", nullable = false)
     @Min(value = 0, message = "Значение Estimation должно быть от 0 до 10")
     @Max(value = 10, message = "Значение Estimation должно быть от 0 до 10")
+    @NotBlank(message = "estimation обязателен для заполнения")
     private Integer estimation;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Image обязателен для заполнения")
+    @Column(name = "image")
     private String image;
+
+    @Column(name = "is_favourite")
+    private Boolean isFavourite;
+
+    @Column(name = "by_user", nullable = false)
+    private Long byUser;
 
     @Column(name = "add_date", nullable = false)
     private String addDate;

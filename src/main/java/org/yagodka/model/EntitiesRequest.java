@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntityRequest {
+public class EntitiesRequest {
 
     @NotBlank(message = "Type обязателен для заполнения")
     private String type;
