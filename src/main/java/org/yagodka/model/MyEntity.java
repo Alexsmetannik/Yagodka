@@ -22,7 +22,7 @@ public class MyEntity {
 
     @Column(name = "type", nullable = false)
     @NotBlank(message = "type обязателен для заполнения")
-    private String type;
+    private ProductType type;
 
     @Column(name = "display_name", nullable = false)
     @NotBlank(message = "displayName обязателен для заполнения")
@@ -38,8 +38,8 @@ public class MyEntity {
     private String description;
 
     @Column(name = "estimation", nullable = false)
-    @Min(value = 0, message = "Значение Estimation должно быть от 0 до 10")
-    @Max(value = 10, message = "Значение Estimation должно быть от 0 до 10")
+    @Min(value = 0, message = "Значение estimation должно быть от 0 до 10")
+    @Max(value = 10, message = "Значение estimation должно быть от 0 до 10")
     @NotBlank(message = "estimation обязателен для заполнения")
     private Integer estimation;
 
@@ -50,11 +50,14 @@ public class MyEntity {
     private Boolean isFavourite;
 
     @Column(name = "by_user", nullable = false)
+    @NotBlank(message = "by_user обязателен для заполнения")
     private Long byUser;
 
     @Column(name = "add_date", nullable = false)
+    @NotBlank(message = "add_date обязателен для заполнения")
     private String addDate;
 
     @Column(name = "update_date", nullable = false)
+    @NotBlank(message = "update_date обязателен для заполнения")
     private String updateDate;
 }

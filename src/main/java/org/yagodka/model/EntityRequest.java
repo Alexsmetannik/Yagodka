@@ -11,13 +11,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntitiesRequest {
+public class EntityRequest {
 
     @NotBlank(message = "type обязателен для заполнения")
     private ProductType type;
 
     @NotBlank(message = "displayName обязателен для заполнения")
     private String displayName;
+
+    private String minus;
+
+    private String plus;
 
     private String description;
 
@@ -27,4 +31,9 @@ public class EntitiesRequest {
     private Integer estimation;
 
     private String image;
+
+    private Boolean isFavourite;
+
+    @NotBlank(message = "byUser обязателен для заполнения")
+    private Long byUser;
 }

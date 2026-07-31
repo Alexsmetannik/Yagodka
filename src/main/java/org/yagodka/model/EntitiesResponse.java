@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntitiesResponse {
     private Long id;
-    private String type;
+    private ProductType type;
     private String displayName;
     private String description;
     private Integer estimation;
