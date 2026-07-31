@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yagodka.model.ApiResponse;
-import org.yagodka.model.EntitiesRequest;
 import org.yagodka.model.EntitiesResponse;
+import org.yagodka.model.EntityRequest;
+import org.yagodka.model.EntityResponse;
 import org.yagodka.service.EntityService;
 
 import java.util.Collections;
@@ -48,44 +49,44 @@ public class EntityController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<List<EntitiesResponse>>> createEntity(
-            @Valid @RequestBody EntitiesRequest request) {
+    public ResponseEntity<ApiResponse<List<EntityResponse>>> createEntity(
+            @Valid @RequestBody EntityRequest request) {
 
         try {
-            EntitiesResponse createdEntity = entityService.createEntity(request);
-            ApiResponse<List<EntitiesResponse>> response = ApiResponse.success(Collections.singletonList(createdEntity));
+            EntityResponse createdEntity = entityService.createEntity(request);
+            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Collections.singletonList(createdEntity));
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (Exception e) {
-            ApiResponse<List<EntitiesResponse>> response = ApiResponse.error(List.of("entity не создан"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity не создан"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<List<EntitiesResponse>>> updateEntity(
+    public ResponseEntity<ApiResponse<List<EntityResponse>>> updateEntity(
             @PathVariable Long id,
-            @RequestBody EntitiesRequest request) {
+            @RequestBody EntityRequest request) {
 
         try {
             if (request.getEstimation() != null && (request.getEstimation() < 0 || request.getEstimation() > 10)) {
-                ApiResponse<List<EntitiesResponse>> response = ApiResponse.error(List.of("request is bad"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            EntitiesResponse updatedEntity = entityService.updateEntity(id, request);
-            ApiResponse<List<EntitiesResponse>> response = ApiResponse.success(Collections.singletonList(updatedEntity));
+            EntityResponse updatedEntity = entityService.updateEntity(id, request);
+            ApiResponse<List<EntityResponse>> response = ApiResponse.success(Collections.singletonList(updatedEntity));
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<List<EntitiesResponse>> response = ApiResponse.error(List.of("entity не найден"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity не найден"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            ApiResponse<List<EntitiesResponse>> response = ApiResponse.error(List.of("request is bad"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            ApiResponse<List<EntitiesResponse>> response = ApiResponse.error(List.of("request is bad"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -112,22 +113,21 @@ public class EntityController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<EntitiesResponse>> getEntityById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<EntityResponse>> getEntityById(@PathVariable Long id) {
 
         try {
-            entityService.getEntityById(id);
-            ApiResponse<EntitiesResponse> response = new ApiResponse<>("success", null, null);
+            EntityResponse entity = entityService.getEntityById(id);
+            ApiResponse<EntityResponse> response = ApiResponse.success(entity);
             return ResponseEntity.ok(response);
-
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<EntitiesResponse> response = ApiResponse.error(List.of("entity не найден"));
+                ApiResponse<EntityResponse> response = ApiResponse.error(List.of("entity не найден"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            ApiResponse<EntitiesResponse> response = ApiResponse.error(List.of("request is bad"));
+            ApiResponse<EntityResponse> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            ApiResponse<EntitiesResponse> response = ApiResponse.error(List.of("request is bad"));
+            ApiResponse<EntityResponse> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
