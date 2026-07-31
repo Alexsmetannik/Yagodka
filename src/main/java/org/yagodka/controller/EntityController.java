@@ -42,7 +42,7 @@ public class EntityController {
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entities not found"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity не найден"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -57,7 +57,7 @@ public class EntityController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (Exception e) {
-            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity not create"));
+            ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity не создан"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -79,7 +79,7 @@ public class EntityController {
 
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entities not found"));
+                ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("entity не найден"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             ApiResponse<List<EntityResponse>> response = ApiResponse.error(List.of("request is bad"));
@@ -100,13 +100,34 @@ public class EntityController {
 
         } catch (RuntimeException e) {
             if (e.getMessage().equals("Entity not found")) {
-                ApiResponse<Void> response = ApiResponse.error(List.of("entities not found"));
+                ApiResponse<Void> response = ApiResponse.error(List.of("entity не найден"));
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             ApiResponse<Void> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
             ApiResponse<Void> response = ApiResponse.error(List.of("request is bad"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<EntityResponse>> getEntityById(@PathVariable Long id) {
+
+        try {
+            entityService.getEntityById(id);
+            ApiResponse<EntityResponse> response = new ApiResponse<>("success", null, null);
+            return ResponseEntity.ok(response);
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("Entity not found")) {
+                ApiResponse<EntityResponse> response = ApiResponse.error(List.of("entity не найден"));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+            ApiResponse<EntityResponse> response = ApiResponse.error(List.of("request is bad"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        } catch (Exception e) {
+            ApiResponse<EntityResponse> response = ApiResponse.error(List.of("request is bad"));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
